@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Button, Checkbox, Form, Input, message, notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { login } from '../../services/api';
+import { doLoginAction } from '../../redux/slice/accountSlide';
 
 const LoginPage = () => {
 
@@ -10,23 +12,23 @@ const LoginPage = () => {
     const dispatch = useDispatch();
 
     const onFinish = async (values) => {
-        // const { username, password } = values;
-        // setIsSubmit(true);
-        // const res = await callLogin(username, password);
-        // setIsSubmit(false);
-        // if (res?.data?.user) {
-        //     localStorage.setItem('access_token', res.data.access_token)
-        //     dispatch(doLoginAction(res.data))
-        //     message.success("Đăng nhập người dùng thành công!!!");
-        //     navigate('/')
-        // }
-        // else {
-        //     notification.error({
-        //         message: "Have error!!!",
-        //         description: res.message,
-        //         duration: 5
-        //     })
-        // }
+        const { username, password } = values;
+        setIsSubmit(true);
+        const res = await login(username, password);
+        setIsSubmit(false);
+        if (res?.data?.user) {
+            localStorage.setItem('access_token', res.data.access_token)
+            dispatch(doLoginAction(res.data))
+            message.success("Đăng nhập người dùng thành công!!!");
+            navigate('/')
+        }
+        else {
+            notification.error({
+                message: "Have error!!!",
+                description: res.message,
+                duration: 5
+            })
+        }
     };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);

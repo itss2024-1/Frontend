@@ -8,6 +8,10 @@ const instance = axios.create({
     withCredentials: false, // Không sử dụng cookie hoặc thông tin xác thực
 });
 
+const NO_RETRY_HEADER = 'x-no-retry'
+
+instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem("access_token")}` }
+
 // Thêm request interceptor (nếu cần, có thể không thêm)
 instance.interceptors.request.use(
     (config) => {

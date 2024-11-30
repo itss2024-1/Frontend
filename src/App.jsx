@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
 
 import NotFound from './pages/Errors/NotFound'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import UserPage from './pages/Admin/user/UserPage'
-import Home from './components/Home/Home'
 import LayoutAdmin from './components/Admin/LayoutAdmin'
 import AdminPage from './pages/Admin/AdminPage'
 import LoginPage from './pages/Login/Login'
+import { fetchAccount } from './redux/slice/accountSlide'
+import { useDispatch, useSelector } from 'react-redux'
+import Home from './pages/Client/Home/Home'
 
 const Layout = () => {
 
@@ -48,6 +50,17 @@ const router = createBrowserRouter([
 ])
 
 const App = () => {
+  const dispatch = useDispatch();
+  const isLoading = useSelector(state => state.account.isLoading);
+
+  useEffect(() => {
+    if (
+      window.location.pathname === '/login'
+      || window.location.pathname === '/register'
+    )
+      return;
+    dispatch(fetchAccount())
+  }, [])
 
   return (
     <>
