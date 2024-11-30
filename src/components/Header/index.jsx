@@ -10,7 +10,7 @@ import { DownOutlined } from "@ant-design/icons";
 const Header = () => {
     const items = [
         {
-            label: <Link to="/history">Trang quản trị</Link>,
+            label: <Link to="/admin">Trang quản trị</Link>,
             key: 'admin',
         },
         {
@@ -83,7 +83,7 @@ const Header = () => {
                         }}>☰</div>
                         <div className='page-header__logo'>
                             <span className='logo' onClick={() => { handleHomePage() }}>
-                                <FaReact className='rotate icon-react' /> Hỏi Dân IT
+                                <FaReact className='rotate icon-react' /> ITSS
                                 <VscSearchFuzzy className='icon-search' />
                             </span>
                             <input
