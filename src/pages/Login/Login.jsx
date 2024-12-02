@@ -13,9 +13,10 @@ const LoginPage = () => {
 
     const onFinish = async (values) => {
         const { username, password } = values;
-        setIsSubmit(true);
+        // setIsSubmit(true);
         const res = await login(username, password);
-        setIsSubmit(false);
+        // setIsSubmit(false);
+        console.log(">> check ", res)
         if (res?.data?.user) {
             localStorage.setItem('access_token', res.data.access_token)
             dispatch(doLoginAction(res.data))

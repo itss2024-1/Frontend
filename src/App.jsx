@@ -4,13 +4,14 @@ import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
 import NotFound from './pages/Errors/NotFound'
 import Footer from './components/Footer'
 import Header from './components/Header'
-import UserPage from './pages/Admin/user/UserPage'
 import LayoutAdmin from './components/Admin/LayoutAdmin'
 import AdminPage from './pages/Admin/AdminPage'
 import LoginPage from './pages/Login/Login'
 import { fetchAccount } from './redux/slice/accountSlide'
 import { useDispatch, useSelector } from 'react-redux'
 import Home from './pages/Client/Home/Home'
+import SchoolPage from './pages/Admin/School/SchoolPage'
+import UserPage from './pages/Admin/User/UserPage'
 
 const Layout = () => {
 
@@ -41,7 +42,12 @@ const router = createBrowserRouter([
       {
         path: "users",
         element: <UserPage />,
-      },]
+      },
+      {
+        path: "schools",
+        element: <SchoolPage />,
+      }
+    ]
   },
   {
     path: "/login",

@@ -8,14 +8,19 @@ const instance = axios.create({
     withCredentials: false, // Không sử dụng cookie hoặc thông tin xác thực
 });
 
-const NO_RETRY_HEADER = 'x-no-retry'
+const NO_RETRY_HEADER = 'x-no-retry';
 
-instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem("access_token")}` }
+// Danh sách các API không cần đính kèm token
 
-// Thêm request interceptor (nếu cần, có thể không thêm)
+instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem("access_token")}` };
+
+// Thêm request interceptor
 instance.interceptors.request.use(
     (config) => {
-        // Không thêm bất kỳ header hoặc logic liên quan đến security
+        // Kiểm tra nếu URL không nằm trong danh sách noAuthApis thì thêm header Authorization
+            if (typeof window !== "undefined" && window && window.localStorage && window.localStorage.getItem('access_token')) {
+                config.headers.Authorization = 'Bearer ' + window.localStorage.getItem('access_token');
+            }
         return config; // Trả về config không thay đổi
     },
     (error) => {

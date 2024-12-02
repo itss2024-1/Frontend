@@ -1,13 +1,25 @@
 import { FaReact } from "react-icons/fa";
 import { VscSearchFuzzy } from "react-icons/vsc";
-import { Avatar, Badge, Divider, Dropdown, Popover, Space } from "antd";
+import { Badge, Divider, Dropdown, Popover, Space } from "antd";
 import { FiShoppingCart } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 import "./header.scss"
 import { DownOutlined } from "@ant-design/icons";
+import { callLogout } from "../../services/api";
 
 const Header = () => {
+
+    const handleLogout = async () => {
+        const res = await callLogout();
+        console.log(">> logout!")
+        // if (res && res.data) {
+        //     dispatch(doLogoutAction());
+        //     message.success("Logout success !!!");
+        //     navigate("/")
+        // }
+    }
+
     const items = [
         {
             label: <Link to="/admin">Trang quản trị</Link>,
@@ -22,7 +34,7 @@ const Header = () => {
             key: 'history',
         },
         {
-            label: <label style={{ cursor: "pointer" }}>Đăng xuất</label>,
+            label: <label onClick={handleLogout} style={{ cursor: "pointer" }}>Đăng xuất</label>,
             key: 'logout',
         },
 
@@ -39,6 +51,8 @@ const Header = () => {
         navigate("/")
     }
 
+
+
     const text = <span>Title</span>;
 
     let contentPopover = () => {
@@ -46,28 +60,7 @@ const Header = () => {
             <>
                 <div className='pop-cart-body'>
                     <div className='pop-cart-content'>
-                        {/* {carts?.map((book, index) => {
-                            return (
-                                <>
-                                    <div className='book' key={`book-${index}`}>
-                                        <img src={`${import.meta.env.VITE_BACKEND_URL}/images/book/${book?.detail?.thumbnail}`} />
-                                        <div>{book?.detail?.mainText}</div>
-                                        <div className='price'>
-                                            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(book?.detail?.price ?? 0)}
-                                        </div>
-                                    </div>
-                                </>
-                            )
-                        })} */}
                     </div>
-                    {/* {Array.isArray(carts) && carts.length > 0 ? <div className='pop-cart-footer'>
-                        <button onClick={() => navigate('/order')}>Xem giỏ hàng</button>
-                    </div>
-                        :
-                        <Empty
-                            description="Không có sản phẩm trong giỏ hàng"
-                        />
-                    } */}
                 </div>
             </>
         )

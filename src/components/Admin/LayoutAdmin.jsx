@@ -22,7 +22,7 @@ const LayoutAdmin = () => {
 
     const items = [
         {
-            label: <Link to='/admin'>Dashboard</Link>,
+            label: <Link to='/admin'>Trang quản trị</Link>,
             key: 'dashboard',
             icon: <AppstoreOutlined />
         },
@@ -32,8 +32,8 @@ const LayoutAdmin = () => {
             icon: <TeamOutlined />,
         },
         {
-            label: <Link to='/admin/school'>Quản lý trường học</Link>,
-            key: 'book',
+            label: <Link to='/admin/schools'>Quản lý trường học</Link>,
+            key: 'schools',
             icon: <ExceptionOutlined />
         },
 

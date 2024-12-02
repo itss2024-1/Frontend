@@ -10,10 +10,7 @@ export const fetchAccount = createAsyncThunk(
 )
 
 const initialState = {
-    isAuthenticated: false,
-    isLoading: true,
-    // isRefreshToken: false,
-    // errorRefreshToken: "",
+    isAuthenticated: false,    
     user: {
         id: "",
         email: "",
@@ -30,13 +27,27 @@ export const accountSlice = createSlice({
         state.isAuthenticated = true;
         state.user = action.payload.user;
     },
+    doGetAccountAction: (state, action) => {
+        state.isAuthenticated = true;
+        state.user = action.payload.user;
+    },
+    doLogoutAction: (state) => {
+        localStorage.removeItem("access_token");
+        state.isAuthenticated = false;
+        state.user = {
+            id: "",
+            name: "",
+            email: "",
+            password: "",
+        };
+    },
   },
   extraReducers: (builder) => {
     // Add reducers for additional action types here, and handle loading state as needed
     builder.addCase(fetchAccount.pending, (state, action) => {
         if (action.payload) {
             state.isAuthenticated = false;
-            state.isLoading = true;
+            // state.isLoading = true;
         }
     })
 
@@ -53,12 +64,12 @@ export const accountSlice = createSlice({
     builder.addCase(fetchAccount.rejected, (state, action) => {
         if (action.payload) {
             state.isAuthenticated = false;
-            state.isLoading = false;
+            // state.isLoading = false;
         }
     })
 },
 })
 
-export const { doLoginAction} = accountSlice.actions;
+export const { doLoginAction, doLogoutAction, doGetAccountAction} = accountSlice.actions;
 
 export default accountSlice.reducer;
