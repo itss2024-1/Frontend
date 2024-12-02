@@ -1,12 +1,14 @@
 import { CloudUploadOutlined, DeleteTwoTone, EditTwoTone, ExportOutlined, PlusOutlined, ReloadOutlined } from "@ant-design/icons";
-import { Button, Col, message, notification, Popconfirm, Row, Table } from "antd"
+import { Button, Col, message, notification, Popconfirm, Row, Table } from "antd";
 import { useEffect, useState } from "react";
-import { callFetchUser } from "../../../services/api";
+import { callDeleteUser, callFetchUser } from "../../../services/api";
+import UserViewDetail from "./UserViewDetail";
+import UserModalUpdate from "./UserModalUpdate";
+import UserModalCreate from "./UserModalCreate";
 
 const UserTable = () => {
-
     const [data, setData] = useState([]);
-    const [current, setCurrent] = useState(1);
+    const [current, setCurrent] = useState(0);
     const [pageSize, setPageSize] = useState(5);
     const [total, setTotal] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
@@ -26,15 +28,14 @@ const UserTable = () => {
         {
             title: 'Id',
             dataIndex: 'id',
-            // render: (text, record, index) => {
-            //     return (
-            //         <a href='#' onClick={() => {
-            //             setOpenViewDetail(true);
-            //             setDataViewDetail(record);
-            //         }}>{record._id}</a>
-
-            //     )
-            // }
+            render: (text, record, index) => {
+                return (
+                    <a href='#' onClick={() => {
+                        setOpenViewDetail(true);
+                        setDataViewDetail(record);
+                    }}>{record.id}</a>
+                );
+            }
         },
         {
             title: 'Name',
@@ -56,19 +57,6 @@ const UserTable = () => {
             render: (text, record, index) => {
                 return (
                     <>
-                        <Popconfirm
-                            placement="leftTop"
-                            title={"Xác nhận xóa user"}
-                            description={"Bạn có chắc chắn muốn xóa user này ?"}
-                            onConfirm={() => handleDeleteUser(record._id)}
-                            okText="Xác nhận"
-                            cancelText="Hủy"
-                        >
-                            <span style={{ cursor: "pointer", margin: "0 20px" }}>
-                                <DeleteTwoTone twoToneColor="#ff4d4f" />
-                            </span>
-                        </Popconfirm>
-
                         <EditTwoTone
                             twoToneColor="#f57800" style={{ cursor: "pointer" }}
                             onClick={() => {
@@ -76,10 +64,20 @@ const UserTable = () => {
                                 setDataUserUpdate(record);
                             }}
                         />
-
+                        <Popconfirm
+                            placement="leftTop"
+                            title={"Xác nhận xóa user"}
+                            description={"Bạn có chắc chắn muốn xóa user này ?"}
+                            onConfirm={() => callDeleteUser({ data: { id: record.id } })}
+                            okText="Xác nhận"
+                            cancelText="Hủy"
+                        >
+                            <span style={{ cursor: "pointer", margin: "0 20px" }}>
+                                <DeleteTwoTone twoToneColor="#ff4d4f" />
+                            </span>
+                        </Popconfirm>
                     </>
-
-                )
+                );
             }
         }
     ];
@@ -105,54 +103,51 @@ const UserTable = () => {
                         icon={<PlusOutlined />}
                         type="primary"
                         onClick={() => {
-                            setOpenModalCreate(true)
+                            setOpenModalCreate(true);
                         }}
                     >Thêm mới</Button>
                     <Button type='ghost' onClick={() => {
                         setFilter("");
-                        setSortQuery("")
+                        setSortQuery("");
                     }}>
                         <ReloadOutlined />
                     </Button>
                 </span>
             </div>
-        )
-    }
+        );
+    };
 
     const fetchUser = async () => {
-
-        const res = await callFetchUser(0, 5, 'name,asc');
+        const res = await callFetchUser(current, pageSize, 'name,asc');
         if (res && res.data.data.meta.total) {
             setData(res.data.data.result);
             setTotal(res.data.data.meta.total);
         }
-        setIsLoading(false)
-    }
-
-    useEffect(() => {
-        fetchUser();
-    }, [current, pageSize, filter, sortQuery]);
+        setIsLoading(false);
+    };
 
     const onChange = async (pagination, filters, sorter, extra) => {
-        console.log('params', pagination, filters, sorter, extra);
-        if (pagination && pagination.current !== current) {
-            setCurrent(pagination.current)
+        if (pagination && pagination.current !== current + 1) {
+            setCurrent(pagination.current - 1); // Subtract 1 to start from 0
         }
         if (pagination && pagination.pageSize !== pageSize) {
-            setPageSize(pagination.pageSize)
-            setCurrent(1);
+            setPageSize(pagination.pageSize);
+            setCurrent(0); // Reset to 0 when page size changes
         }
         if (sorter && sorter.field) {
             const q = sorter.order === 'ascend' ? `sort=${sorter.field}` : `sort=-${sorter.field}`;
             setSortQuery(q);
         }
-
     };
 
+    useEffect(() => {
+        fetchUser();
+    }, [current, pageSize, filter, sortQuery]);
+
     const handleSearch = (query) => {
-        setCurrent(1)
+        setCurrent(0);
         setFilter(query);
-    }
+    };
 
     const handleExportData = () => {
         if (data.length > 0) {
@@ -161,7 +156,7 @@ const UserTable = () => {
             XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
             XLSX.writeFile(workbook, "DataSheet.xlsx");
         }
-    }
+    };
 
     const handleDeleteUser = async (_id) => {
         console.log("delete user", _id);
@@ -169,13 +164,13 @@ const UserTable = () => {
         if (res && res.data) {
             message.success('Xoá người dùng thành công');
             fetchUser();
-        }
-        else
+        } else {
             notification.error({
                 message: 'Đã có lỗi xảy ra',
                 description: res.message,
             });
-    }
+        }
+    };
 
     return (
         <>
@@ -194,22 +189,36 @@ const UserTable = () => {
                         dataSource={data}
                         onChange={onChange}
                         rowKey="id"
-                        pagination={
-                            {
-                                current: current,
-                                pageSize: pageSize,
-                                showSizeChanger: true,
-                                total: total,
-                                showTotal: (total, range) => { return (<div> {range[0]}-{range[1]} trên {total} rows</div>) }
-                            }
-                        }
+                        pagination={{
+                            current: current + 1, // Add 1 to display correct page number
+                            pageSize: pageSize,
+                            showSizeChanger: true,
+                            total: total,
+                            showTotal: (total, range) => { return (<div> {range[0]}-{range[1]} trên {total} rows</div>); }
+                        }}
                         loading={isLoading}
                     />
                 </Col>
             </Row>
-
+            <UserViewDetail
+                openViewDetail={openViewDetail}
+                setOpenViewDetail={setOpenViewDetail}
+                dataViewDetail={dataViewDetail}
+            />
+            <UserModalUpdate
+                openModalUpdate={openModalUpdate}
+                setOpenModalUpdate={setOpenModalUpdate}
+                setDataUserUpdate={setDataUserUpdate}
+                dataUserUpdate={dataUserUpdate}
+                fetchUser={fetchUser}
+            />
+            <UserModalCreate
+                openModalCreate={openModalCreate}
+                setOpenModalCreate={setOpenModalCreate}
+                fetchUser={fetchUser}
+            />
         </>
+    );
+};
 
-    )
-}
 export default UserTable;
