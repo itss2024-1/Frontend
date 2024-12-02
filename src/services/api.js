@@ -39,3 +39,11 @@ export const callFetchSchool = (page, size, sort) => {
 export const callCreateSchool = (data) => {
     return axios.post(`/api/v1/schools`, data)
 }
+
+export const callUpdateSchool = (data) => {
+    return axios.put(`/api/v1/schools`, data)
+}
+
+export const callDeleteSchool = (data) => {
+    return axios.delete(`/api/v1/schools`, data)
+}

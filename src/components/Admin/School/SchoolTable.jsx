@@ -1,7 +1,11 @@
 import { CloudUploadOutlined, DeleteTwoTone, EditTwoTone, ExportOutlined, PlusOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Col, message, notification, Popconfirm, Row, Table } from "antd"
 import { useEffect, useState } from "react";
+
 import { callFetchSchool } from "../../../services/api";
+import SchoolViewDetail from "./SchoolViewDetail";
+import SchoolModalCreate from "./SchoolModalCreate";
+import SchoolModalUpdate from "./SchoolModalUpdate";
 
 const SchoolTable = () => {
 
@@ -15,7 +19,7 @@ const SchoolTable = () => {
     const [openViewDetail, setOpenViewDetail] = useState(false);
     const [dataViewDetail, setDataViewDetail] = useState(null);
     const [openModalUpdate, setOpenModalUpdate] = useState(false);
-    const [dataUserUpdate, setDataUserUpdate] = useState(null);
+    const [dataSchoolUpdate, setDataSchoolUpdate] = useState(null);
 
     const [openModalImport, setOpenModalImport] = useState(false);
 
@@ -26,15 +30,15 @@ const SchoolTable = () => {
         {
             title: 'Id',
             dataIndex: 'id',
-            // render: (text, record, index) => {
-            //     return (
-            //         <a href='#' onClick={() => {
-            //             setOpenViewDetail(true);
-            //             setDataViewDetail(record);
-            //         }}>{record._id}</a>
+            render: (text, record, index) => {
+                return (
+                    <a href='#' onClick={() => {
+                        setOpenViewDetail(true);
+                        setDataViewDetail(record);
+                    }}>{record.id}</a>
 
-            //     )
-            // }
+                )
+            }
         },
         {
             title: 'Name',
@@ -56,6 +60,13 @@ const SchoolTable = () => {
             render: (text, record, index) => {
                 return (
                     <>
+                        <EditTwoTone
+                            twoToneColor="#f57800" style={{ cursor: "pointer" }}
+                            onClick={() => {
+                                setOpenModalUpdate(true);
+                                setDataSchoolUpdate(record);
+                            }}
+                        />
                         <Popconfirm
                             placement="leftTop"
                             title={"Xác nhận xóa user"}
@@ -68,15 +79,6 @@ const SchoolTable = () => {
                                 <DeleteTwoTone twoToneColor="#ff4d4f" />
                             </span>
                         </Popconfirm>
-
-                        <EditTwoTone
-                            twoToneColor="#f57800" style={{ cursor: "pointer" }}
-                            onClick={() => {
-                                setOpenModalUpdate(true);
-                                setDataUserUpdate(record);
-                            }}
-                        />
-
                     </>
 
                 )
@@ -119,7 +121,7 @@ const SchoolTable = () => {
         )
     }
 
-    const fetchUser = async () => {
+    const fetchSchool = async () => {
 
         const res = await callFetchSchool(0, 5, 'name,asc');
         if (res && res.data.data.meta.total) {
@@ -130,7 +132,7 @@ const SchoolTable = () => {
     }
 
     useEffect(() => {
-        fetchUser();
+        fetchSchool();
     }, [current, pageSize, filter, sortQuery]);
 
     const onChange = async (pagination, filters, sorter, extra) => {
@@ -168,7 +170,7 @@ const SchoolTable = () => {
         const res = await callDeleteUser(_id);
         if (res && res.data) {
             message.success('Xoá người dùng thành công');
-            fetchUser();
+            fetchSchool();
         }
         else
             notification.error({
@@ -207,7 +209,23 @@ const SchoolTable = () => {
                     />
                 </Col>
             </Row>
-
+            <SchoolViewDetail
+                openViewDetail={openViewDetail}
+                setOpenViewDetail={setOpenViewDetail}
+                dataViewDetail={dataViewDetail}
+            />
+            <SchoolModalCreate
+                openModalCreate={openModalCreate}
+                setOpenModalCreate={setOpenModalCreate}
+                fetchSchool={fetchSchool}
+            />
+            <SchoolModalUpdate
+                openModalUpdate={openModalUpdate}
+                setOpenModalUpdate={setOpenModalUpdate}
+                setDataSchoolUpdate={setDataSchoolUpdate}
+                dataSchoolUpdate={dataSchoolUpdate}
+                fetchSchool={fetchSchool}
+            />
         </>
 
     )
