@@ -2,13 +2,19 @@ import { FaReact } from "react-icons/fa";
 import { VscSearchFuzzy } from "react-icons/vsc";
 import { Badge, Divider, Dropdown, Popover, Space } from "antd";
 import { FiShoppingCart } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./header.scss"
 import { DownOutlined } from "@ant-design/icons";
 import { callLogout } from "../../services/api";
+import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const isAuthenticated = useSelector(state => state.account.isAuthenticated);
+    const user = useSelector(state => state.account.user);
 
     const handleLogout = async () => {
         const res = await callLogout();
@@ -100,30 +106,20 @@ const Header = () => {
                             </li>
                             <li className="navigation__item mobile"><Divider type='vertical' /></li>
                             <li className="navigation__item mobile">
-                                {/* {!isAuthenticated ?
+                                {!isAuthenticated ?
                                     <span onClick={() => navigate('/login')}> Tài Khoản</span>
                                     :
                                     <Dropdown menu={{ items: items }} trigger={['click']}>
                                         <a onClick={(e) => e.preventDefault()}>
-                                            <Avatar src={urlAvatar} />
+                                            {/* <Avatar src={urlAvatar} /> */}
 
                                             <Space>
-                                                Welcome {user?.fullName}
+                                                Welcome {user?.name}
                                                 <DownOutlined />
                                             </Space>
                                         </a>
                                     </Dropdown>
-                                } */}
-                                <Dropdown menu={{ items: items }} trigger={['click']}>
-                                    <a onClick={(e) => e.preventDefault()}>
-                                        {/* <Avatar src={urlAvatar} /> */}
-
-                                        <Space>
-                                            Welcome
-                                            <DownOutlined />
-                                        </Space>
-                                    </a>
-                                </Dropdown>
+                                }
                             </li>
                         </ul>
                     </nav>

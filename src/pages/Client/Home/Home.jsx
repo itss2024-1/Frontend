@@ -44,55 +44,6 @@ const Home = () => {
         },
     ];
 
-    // useEffect(() => {
-    //     const fetchCategory = async () => {
-    //         const res = await callFetchCategory();
-    //         if (res && res.data) {
-    //             const d = res.data.map(item => {
-    //                 return { label: item, value: item }
-    //             })
-    //             setListCategory(d);
-    //         }
-    //     }
-    //     fetchCategory();
-    // }, [])
-
-    // useEffect(() => {
-    //     fetchBook();
-    // }, [current, pageSize, filter, sortQuery]);
-
-    // const fetchBook = async () => {
-    //     setIsLoading(true)
-    //     let query = `current=${current}&pageSize=${pageSize}`;
-    //     if (filter) {
-    //         query += `&${filter}`;
-    //     }
-    //     if (sortQuery) {
-    //         query += `&${sortQuery}`;
-    //     }
-
-    //     // if (searchTerm) {
-    //     //     query += `&mainText=/${searchTerm}/i`;
-    //     // }
-
-    //     const res = await callFetchListBook(query);
-    //     if (res && res.data) {
-    //         setListBook(res.data.result);
-    //         setTotal(res.data.meta.total)
-    //     }
-    //     setIsLoading(false)
-    // }
-
-    // const handleOnchangePage = (pagination) => {
-    //     if (pagination && pagination.current !== current) {
-    //         setCurrent(pagination.current)
-    //     }
-    //     if (pagination && pagination.pageSize !== pageSize) {
-    //         setPageSize(pagination.pageSize)
-    //         setCurrent(1);
-    //     }
-    // }
-
     const nonAccentVietnamese = (str) => {
         str = str.replace(/A|Á|À|Ã|Ạ|Â|Ấ|Ầ|Ẫ|Ậ|Ă|Ắ|Ằ|Ẵ|Ặ/g, "A");
         str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
@@ -132,11 +83,6 @@ const Home = () => {
 
         return str;
     }
-
-    // const handleRedirectBook = (book) => {
-    //     const slug = convertSlug(book.mainText);
-    //     navigate(`/book/${slug}?id=${book._id}`)
-    // }
 
     const onFinish = () => {
 
