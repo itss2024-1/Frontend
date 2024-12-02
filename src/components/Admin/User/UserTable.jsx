@@ -25,20 +25,20 @@ const UserTable = () => {
     const columns = [
         {
             title: 'Id',
-            dataIndex: '_id',
-            render: (text, record, index) => {
-                return (
-                    <a href='#' onClick={() => {
-                        setOpenViewDetail(true);
-                        setDataViewDetail(record);
-                    }}>{record._id}</a>
+            dataIndex: 'id',
+            // render: (text, record, index) => {
+            //     return (
+            //         <a href='#' onClick={() => {
+            //             setOpenViewDetail(true);
+            //             setDataViewDetail(record);
+            //         }}>{record._id}</a>
 
-                )
-            }
+            //     )
+            // }
         },
         {
             title: 'Name',
-            dataIndex: 'fullName',
+            dataIndex: 'name',
             sorter: true
         },
         {
@@ -47,8 +47,8 @@ const UserTable = () => {
             sorter: true
         },
         {
-            title: 'Phone',
-            dataIndex: 'phone',
+            title: 'Age',
+            dataIndex: 'age',
             sorter: true
         },
         {
@@ -121,11 +121,10 @@ const UserTable = () => {
 
     const fetchUser = async () => {
 
-        const res = await callFetchUser();
-        console.log(">> check", res);
-        if (res && res.data) {
-            setData(res.data.result);
-            setTotal(res.data.meta.total);
+        const res = await callFetchUser(0, 5, 'name,asc');
+        if (res && res.data.data.meta.total) {
+            setData(res.data.data.result);
+            setTotal(res.data.data.meta.total);
         }
         setIsLoading(false)
     }
@@ -194,7 +193,7 @@ const UserTable = () => {
                         columns={columns}
                         dataSource={data}
                         onChange={onChange}
-                        rowKey="_id"
+                        rowKey="id"
                         pagination={
                             {
                                 current: current,

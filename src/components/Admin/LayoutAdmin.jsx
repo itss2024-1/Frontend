@@ -1,67 +1,72 @@
-import React, { useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
 import {
     AppstoreOutlined,
     ExceptionOutlined,
     HeartTwoTone,
     TeamOutlined,
-    UserOutlined,
-    DollarCircleOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
     DownOutlined,
 } from '@ant-design/icons';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import { Layout, Menu, Dropdown, Space } from 'antd';
 
 import './layout.scss'
 
 const { Content, Footer, Sider } = Layout;
 
-const items = [
-    {
-        label: <Link to='/admin'>Dashboard</Link>,
-        key: 'dashboard',
-        icon: <AppstoreOutlined />
-    },
-    {
-        label: <Link to='/admin/users'>Quản lý giáo viên</Link>,
-        key: 'users',
-        icon: <TeamOutlined />,
-    },
-    {
-        label: <Link to='/admin/school'>Quản lý trường học</Link>,
-        key: 'book',
-        icon: <ExceptionOutlined />
-    },
-
-];
-
-const itemsDropdown = [
-    {
-        label: <label
-            style={{ cursor: 'pointer' }}
-        // onClick={() => setShowManageAccount(true)}
-        >Quản lý tài khoản</label>,
-        key: 'account',
-    },
-    {
-        label: <Link to={'/'}>Trang chủ</Link>,
-        key: 'home',
-    },
-    {
-        label: <label
-            style={{ cursor: 'pointer' }}
-        // onClick={() => handleLogout()}
-        >Đăng xuất</label>,
-        key: 'logout',
-    },
-
-
-];
 const LayoutAdmin = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [activeMenu, setActiveMenu] = useState('dashboard');
+    const location = useLocation();
+
+    const items = [
+        {
+            label: <Link to='/admin'>Dashboard</Link>,
+            key: 'dashboard',
+            icon: <AppstoreOutlined />
+        },
+        {
+            label: <Link to='/admin/users'>Quản lý giáo viên</Link>,
+            key: 'users',
+            icon: <TeamOutlined />,
+        },
+        {
+            label: <Link to='/admin/school'>Quản lý trường học</Link>,
+            key: 'book',
+            icon: <ExceptionOutlined />
+        },
+
+    ];
+
+    const itemsDropdown = [
+        {
+            label: <label
+                style={{ cursor: 'pointer' }}
+            // onClick={() => setShowManageAccount(true)}
+            >Quản lý tài khoản</label>,
+            key: 'account',
+        },
+        {
+            label: <Link to={'/'}>Trang chủ</Link>,
+            key: 'home',
+        },
+        {
+            label: <label
+                style={{ cursor: 'pointer' }}
+            // onClick={() => handleLogout()}
+            >Đăng xuất</label>,
+            key: 'logout',
+        },
+    ];
+
+    useEffect(() => {
+        const currentPath = location.pathname;
+        const matchedItem = items.find(item => currentPath.includes(item.key));
+        if (matchedItem) {
+            setActiveMenu(matchedItem.key);
+        }
+    }, [location]);
 
     return (
         <Layout
@@ -82,6 +87,7 @@ const LayoutAdmin = () => {
                     mode="inline"
                     items={items}
                     onClick={(e) => setActiveMenu(e.key)}
+                    selectedKeys={[activeMenu]}
                 />
             </Sider>
             <Layout>

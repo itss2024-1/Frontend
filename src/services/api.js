@@ -1,7 +1,7 @@
 import axios from "../utils/axios-customize"
 
-export const callFetchUser = () => {
-    return axios.get(`/users`)
+export const callFetchUser = (page, size, sort) => {
+    return axios.get(`/api/v1/users?page=${page}&size=${size}&sort=${sort}`)
 }
 
 export const callFetchAccount = () => {
