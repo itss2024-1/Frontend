@@ -8,6 +8,8 @@ import "./header.scss"
 import { DownOutlined } from "@ant-design/icons";
 import { callLogout } from "../../services/api";
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import ManageAccount from "../Account/ManageAccount";
 
 const Header = () => {
 
@@ -15,6 +17,7 @@ const Header = () => {
     const dispatch = useDispatch();
     const isAuthenticated = useSelector(state => state.account.isAuthenticated);
     const user = useSelector(state => state.account.user);
+    const [isInfor, setIsInfor] = useState(false);
 
     const handleLogout = async () => {
         const res = await callLogout();
@@ -125,10 +128,10 @@ const Header = () => {
                     </nav>
                 </header>
             </div>
-            {/* <ManageAccount
+            <ManageAccount
                 isModalOpen={isInfor}
                 setIsModalOpen={setIsInfor}
-            /> */}
+            />
         </>
     );
 }

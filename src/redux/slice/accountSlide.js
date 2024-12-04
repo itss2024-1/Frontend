@@ -15,7 +15,10 @@ const initialState = {
         id: "",
         email: "",
         name: "",
+        phone: "",
+        avatar: "",
     },
+    tempAvatar: ""
 };
 
 
@@ -38,16 +41,24 @@ export const accountSlice = createSlice({
             id: "",
             name: "",
             email: "",
-            password: "",
+            avatar: "",
+            phone: "",
         };
+    },
+    doUploadAvatarAction: (state, action) => {
+        state.tempAvatar = action.payload.avatar
+    },
+    doUpdateUserInfoAction: (state, action) => {
+        state.user.avatar = action.payload.avatar;
+        state.user.phone = action.payload.phone;
+        state.user.name = action.payload.name;
     },
   },
   extraReducers: (builder) => {
     // Add reducers for additional action types here, and handle loading state as needed
     builder.addCase(fetchAccount.pending, (state, action) => {
         if (action.payload) {
-            state.isAuthenticated = false;
-            // state.isLoading = true;
+            state.isAuthenticated = true;
         }
     })
 
@@ -58,18 +69,19 @@ export const accountSlice = createSlice({
             state.user.id = action?.payload?.user?.id;
             state.user.email = action.payload.user?.email;
             state.user.name = action.payload.user?.name;
+            state.user.avatar = action.payload.user?.avatar;
+            state.user.phone = action.payload.user?.phone;
         }
     })
 
     builder.addCase(fetchAccount.rejected, (state, action) => {
         if (action.payload) {
             state.isAuthenticated = false;
-            // state.isLoading = false;
         }
     })
 },
 })
 
-export const { doLoginAction, doLogoutAction, doGetAccountAction} = accountSlice.actions;
+export const { doLoginAction, doLogoutAction, doGetAccountAction, doUploadAvatarAction, doUpdateUserInfoAction} = accountSlice.actions;
 
 export default accountSlice.reducer;
