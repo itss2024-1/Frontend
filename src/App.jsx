@@ -10,7 +10,6 @@ import LoginPage from './pages/Login/Login'
 import { fetchAccount } from './redux/slice/accountSlide'
 import { useDispatch, useSelector } from 'react-redux'
 import Home from './pages/Client/Home/Home'
-import SchoolPage from './pages/Admin/School/SchoolPage'
 import UserPage from './pages/Admin/User/UserPage'
 
 const Layout = () => {
@@ -43,10 +42,6 @@ const router = createBrowserRouter([
         path: "users",
         element: <UserPage />,
       },
-      {
-        path: "schools",
-        element: <SchoolPage />,
-      }
     ]
   },
   {

@@ -1,7 +1,7 @@
 import { Card, Col, Row, Statistic } from "antd";
 import { useEffect, useState } from "react";
 import CountUp from 'react-countup';
-import { callFetchSchool, callFetchUser } from "../../services/api";
+import { callFetchUser } from "../../services/api";
 
 const AdminPage = () => {
     const formatter = (value) => <CountUp end={value} separator="," />;

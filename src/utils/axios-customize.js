@@ -12,7 +12,7 @@ const NO_RETRY_HEADER = 'x-no-retry';
 
 // Danh sách các API không cần đính kèm token
 
-instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem("access_token")}` };
+// instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem("access_token")}` };
 
 // Thêm request interceptor
 instance.interceptors.request.use(
@@ -20,6 +20,10 @@ instance.interceptors.request.use(
         // Kiểm tra nếu URL không nằm trong danh sách noAuthApis thì thêm header Authorization
             if (typeof window !== "undefined" && window && window.localStorage && window.localStorage.getItem('access_token')) {
                 config.headers.Authorization = 'Bearer ' + window.localStorage.getItem('access_token');
+            }
+            if (!config.headers.Accept && config.headers["Content-Type"]) {
+                config.headers.Accept = "application/json";
+                config.headers["Content-Type"] = "application/json; charset=utf-8";
             }
         return config; // Trả về config không thay đổi
     },
