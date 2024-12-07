@@ -1,6 +1,6 @@
 import { FaReact } from "react-icons/fa";
 import { VscSearchFuzzy } from "react-icons/vsc";
-import { Badge, Divider, Dropdown, Popover, Space } from "antd";
+import { Avatar, Badge, Divider, Dropdown, Popover, Space } from "antd";
 import { FiShoppingCart } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -18,6 +18,9 @@ const Header = () => {
     const isAuthenticated = useSelector(state => state.account.isAuthenticated);
     const user = useSelector(state => state.account.user);
     const [isInfor, setIsInfor] = useState(false);
+
+    const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}storage/avatar/${user?.avatar}`;
+
 
     const handleLogout = async () => {
         const res = await callLogout();
@@ -114,7 +117,7 @@ const Header = () => {
                                     :
                                     <Dropdown menu={{ items: items }} trigger={['click']}>
                                         <a onClick={(e) => e.preventDefault()}>
-                                            {/* <Avatar src={urlAvatar} /> */}
+                                            <Avatar src={urlAvatar} />
 
                                             <Space>
                                                 Welcome {user?.name}

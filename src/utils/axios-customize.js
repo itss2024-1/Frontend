@@ -10,10 +10,6 @@ const instance = axios.create({
 
 const NO_RETRY_HEADER = 'x-no-retry';
 
-// Danh sách các API không cần đính kèm token
-
-// instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem("access_token")}` };
-
 // Thêm request interceptor
 instance.interceptors.request.use(
     (config) => {
@@ -25,7 +21,7 @@ instance.interceptors.request.use(
                 config.headers.Accept = "application/json";
                 config.headers["Content-Type"] = "application/json; charset=utf-8";
             }
-        return config; // Trả về config không thay đổi
+        return config; 
     },
     (error) => {
         return Promise.reject(error); // Trả về lỗi nếu có vấn đề trong config
