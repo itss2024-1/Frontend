@@ -43,7 +43,6 @@ const LayoutAdmin = () => {
         {
             label: <label
                 style={{ cursor: 'pointer' }}
-            // onClick={() => setShowManageAccount(true)}
             >Quản lý tài khoản</label>,
             key: 'account',
         },
@@ -54,7 +53,6 @@ const LayoutAdmin = () => {
         {
             label: <label
                 style={{ cursor: 'pointer' }}
-            // onClick={() => handleLogout()}
             >Đăng xuất</label>,
             key: 'logout',
         },

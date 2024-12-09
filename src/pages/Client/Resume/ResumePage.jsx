@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+
 import { callFetchResumeById } from "../../../services/api";
 import ResumeDetail from "../../../components/Resume/ResumeDetail";
 
@@ -21,6 +22,7 @@ const ResumePage = () => {
             setDataResume(res.data.data);
         }
     }
+
     return (
         <div>
             <h1>Resume Detail Page</h1>

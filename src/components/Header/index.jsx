@@ -3,18 +3,17 @@ import { VscSearchFuzzy } from "react-icons/vsc";
 import { Avatar, Badge, Divider, Dropdown, Popover, Space } from "antd";
 import { FiShoppingCart } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
-
-import "./header.scss"
 import { DownOutlined } from "@ant-design/icons";
-import { callLogout } from "../../services/api";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useState } from "react";
+
+import { callLogout } from "../../services/api";
 import ManageAccount from "../Account/ManageAccount";
+import "./header.scss"
+
 
 const Header = () => {
-
     const navigate = useNavigate();
-    const dispatch = useDispatch();
     const isAuthenticated = useSelector(state => state.account.isAuthenticated);
     const user = useSelector(state => state.account.user);
     const [isInfor, setIsInfor] = useState(false);
@@ -24,12 +23,6 @@ const Header = () => {
 
     const handleLogout = async () => {
         const res = await callLogout();
-        console.log(">> logout!")
-        // if (res && res.data) {
-        //     dispatch(doLogoutAction());
-        //     message.success("Logout success !!!");
-        //     navigate("/")
-        // }
     }
 
     const items = [
@@ -52,20 +45,9 @@ const Header = () => {
 
     ];
 
-    // if (user?.role === 'ADMIN') {
-    //     items.unshift({
-    //         label: <Link to='/admin'>Trang quản trị</Link>,
-    //         key: 'admin',
-    //     })
-    // }
-
     const handleHomePage = () => {
         navigate("/")
     }
-
-
-
-    const text = <span>Title</span>;
 
     let contentPopover = () => {
         return (
@@ -84,7 +66,6 @@ const Header = () => {
                 <header className="page-header">
                     <div className="page-header__top">
                         <div className="page-header__toggle" onClick={() => {
-                            // setOpenDrawer(true)
                         }}>☰</div>
                         <div className='page-header__logo'>
                             <span className='logo' onClick={() => { handleHomePage() }}>
@@ -102,7 +83,6 @@ const Header = () => {
                             <li className="navigation__item">
                                 <Popover placement="bottomRight" title={"Sản phẩm mới thêm"} content={contentPopover}>
                                     <Badge
-                                        // count={carts?.length ?? 0}
                                         size={"small"}
                                         showZero
                                     >

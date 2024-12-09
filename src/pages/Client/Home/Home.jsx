@@ -1,7 +1,7 @@
 import { FilterTwoTone, HomeOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Breadcrumb, Button, Checkbox, Col, Divider, Empty, Form, InputNumber, Pagination, Rate, Row, Spin, Tabs } from "antd";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useOutletContext } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import './home.scss'
 import { callFetchResume } from "../../../services/api";
@@ -9,7 +9,6 @@ import { callFetchResume } from "../../../services/api";
 const Home = () => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
-    // const [searchTerm, setSearchTerm] = useOutletContext();
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -100,7 +99,6 @@ const Home = () => {
     }
 
     const handleOnchangePage = (pagination) => {
-        console.log(">> handleOnchangePage", pagination);
         if (pagination && pagination.current !== current) {
             setCurrent(pagination.current)
         }
@@ -127,7 +125,6 @@ const Home = () => {
                         style={{ margin: '5px 0' }}
                         items={[
                             {
-                                // href: '#',
                                 title: <HomeOutlined />,
                             },
                             {
@@ -157,7 +154,6 @@ const Home = () => {
                                 <Form
                                     onFinish={onFinish}
                                     form={form}
-                                // onValuesChange={(changedValues, values) => handleChangeFilter(changedValues, values)}
                                 >
                                     <Form.Item
                                         name="category"
@@ -254,15 +250,6 @@ const Home = () => {
                                             onChange={(value) => { setSort(value) }}
                                             style={{ overflowX: "auto" }}
                                         />
-                                        {/* <Col xs={24} md={0}>
-                                            <div style={{ marginBottom: 20 }} >
-                                                <span onClick={() => setShowMobileFilter(true)}>
-                                                    <FilterTwoTone />
-                                                    <span style={{ fontWeight: 500 }}> Lọc</span>
-                                                </span>
-
-                                            </div>
-                                        </Col> */}
                                         <br />
                                     </Row>
                                     <Row className='customize-row'>
@@ -283,7 +270,6 @@ const Home = () => {
                                                 </div>
                                             )
                                         })}
-
                                         {listResume.length === 0 &&
                                             <div style={{ width: "100%", margin: "0 auto" }}>
                                                 <Empty
@@ -305,11 +291,11 @@ const Home = () => {
                                 </div>
                             </Spin>
                         </Col>
-
                     </Row>
                 </div>
             </div>
         </>
     )
 }
+
 export default Home;

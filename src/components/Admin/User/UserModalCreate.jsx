@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, message, Modal, notification } from 'antd';
+import { Form, Input, message, Modal, notification } from 'antd';
+
 import { callCreateUser } from '../../../services/api';
+
 const UserModalCreate = (props) => {
     const { openModalCreate, setOpenModalCreate } = props;
 
@@ -30,6 +32,7 @@ const UserModalCreate = (props) => {
 
 
     };
+
     return (
         <>
             <Modal title="Basic Modal"
@@ -39,7 +42,6 @@ const UserModalCreate = (props) => {
                 okText={"Tạo mới"}
                 cancelText={"Hủy"}
                 confirmLoading={isSubmit}>
-
                 <Form
                     form={form}
                     name="basic"
@@ -80,9 +82,9 @@ const UserModalCreate = (props) => {
                         <Input />
                     </Form.Item>
                 </Form>
-
             </Modal>
         </>
     );
 };
+
 export default UserModalCreate;

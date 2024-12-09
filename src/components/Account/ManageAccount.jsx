@@ -1,4 +1,5 @@
 import { Modal, Tabs } from "antd";
+
 import UserInfo from "./UserInfo";
 
 const ManageAccount = (props) => {
@@ -17,7 +18,6 @@ const ManageAccount = (props) => {
 
     ];
 
-
     return (
         <>
             <Modal
@@ -32,9 +32,9 @@ const ManageAccount = (props) => {
                     defaultActiveKey="info"
                     items={items}
                 />
-
             </Modal>
         </>
     );
 };
+
 export default ManageAccount;

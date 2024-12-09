@@ -1,6 +1,7 @@
 import { CloudUploadOutlined, DeleteTwoTone, EditTwoTone, ExportOutlined, PlusOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Col, message, notification, Popconfirm, Row, Table } from "antd";
 import { useEffect, useState } from "react";
+
 import { callDeleteUser, callFetchUser } from "../../../services/api";
 import UserViewDetail from "./UserViewDetail";
 import UserModalUpdate from "./UserModalUpdate";
@@ -68,7 +69,7 @@ const UserTable = () => {
                             placement="leftTop"
                             title={"Xác nhận xóa user"}
                             description={"Bạn có chắc chắn muốn xóa user này ?"}
-                            onConfirm={() => callDeleteUser({ data: { id: record.id } })}
+                            onConfirm={() => callDeleteUser(record.id)}
                             okText="Xác nhận"
                             cancelText="Hủy"
                         >
@@ -144,11 +145,6 @@ const UserTable = () => {
         fetchUser();
     }, [current, pageSize, filter, sortQuery]);
 
-    const handleSearch = (query) => {
-        setCurrent(0);
-        setFilter(query);
-    };
-
     const handleExportData = () => {
         if (data.length > 0) {
             const worksheet = XLSX.utils.json_to_sheet(data);
@@ -176,10 +172,6 @@ const UserTable = () => {
         <>
             <Row gutter={[20, 20]}>
                 <Col span={24}>
-                    {/* <InputSearch
-                        handleSearch={handleSearch}
-                        setFilter={setFilter}
-                    /> */}
                 </Col>
 
                 <Col span={24}>
@@ -190,7 +182,7 @@ const UserTable = () => {
                         onChange={onChange}
                         rowKey="id"
                         pagination={{
-                            current: current + 1, // Add 1 to display correct page number
+                            current: current + 1,
                             pageSize: pageSize,
                             showSizeChanger: true,
                             total: total,

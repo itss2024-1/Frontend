@@ -14,6 +14,7 @@ export const callLogout = () => {
 }
 
 // user
+
 export const callFetchUser = (page, size, sort) => {
     return axios.get(`/api/v1/users?page=${page}&size=${size}&sort=${sort}`)
 }
@@ -26,11 +27,12 @@ export const callUpdateUser = (data) => {
     return axios.put(`/api/v1/users`, data)
 }
 
-export const callDeleteUser = (data) => {
-    return axios.delete(`/api/v1/users`, data)
+export const callDeleteUser = (id) => {
+    return axios.delete(`/api/v1/users/${id}`)
 }
 
-// image
+// file upload
+
 export const callUploadSingleFile = (file, folderType) => {
     const bodyFormData = new FormData();
     bodyFormData.append('file', file);

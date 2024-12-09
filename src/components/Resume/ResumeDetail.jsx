@@ -1,52 +1,12 @@
-import { Row, Col, Rate, Divider, Breadcrumb } from 'antd';
-import ImageGallery from 'react-image-gallery';
-import { MinusOutlined, PlusOutlined, HomeOutlined } from '@ant-design/icons';
+import { Row, Col, Rate, Breadcrumb } from 'antd';
+import { HomeOutlined } from '@ant-design/icons';
 import { FaRegHeart } from "react-icons/fa";
-import { Link, useNavigate } from 'react-router-dom';
-import { useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import ResumeLoader from './ResumeLoader';
 import './resume.scss'
 
 const ResumeDetail = (props) => {
     const { dataResume: dataResume } = props;
-
-    const [currentQuantity, setCurrentQuantity] = useState(1);
-    const refGallery = useRef(null);
-    const images = dataResume?.items ?? [];
-
-    const dispatch = useDispatch();
-
-    const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}storage/resume/${dataResume?.images}`;
-
-    const handleChangeButton = (type) => {
-        if (type === 'MINUS') {
-            if (currentQuantity - 1 <= 0) return;
-            setCurrentQuantity(currentQuantity - 1);
-        }
-        if (type === 'PLUS') {
-            if (currentQuantity === +dataResume.quantity) return; //max
-            setCurrentQuantity(currentQuantity + 1);
-        }
-    }
-
-    const handleChangeInput = (value) => {
-        if (!isNaN(value)) {
-            if (+value > 0 && +value < +dataResume.quantity) {
-                setCurrentQuantity(+value);
-            }
-        }
-    }
-
-    const handleAddToCart = (quantity, book) => {
-        dispatch(doAddBookAction({ quantity, detail: book, _id: book._id }))
-    }
-
-    const handleBuyNow = (quantity, book) => {
-        // dispatch(doAddBookAction({ quantity, detail: book, _id: book._id }))
-        // navigate('/order');
-    }
-
 
     return (
         <div style={{ background: '#efefef', padding: "20px 0" }}>
@@ -98,22 +58,13 @@ const ResumeDetail = (props) => {
                                             <span className='right-side'>{dataResume.description}</span>
                                         </div>
                                     </div>
-                                    {/* <div className='quantity'>
-                                        <span className='left-side'>Số lượng</span>
-                                        <span className='right-side'>
-                                            <button onClick={() => handleChangeButton('MINUS')} ><MinusOutlined /></button>
-                                            <input onChange={(event) => handleChangeInput(event.target.value)} value={currentQuantity} />
-                                            <button onClick={() => handleChangeButton('PLUS')}><PlusOutlined /></button>
-                                        </span>
-                                    </div> */}
                                     <div className='buy'>
-                                        <button className='cart' onClick={() => handleAddToCart(currentQuantity, dataResume)}>
+                                        <button className='cart' >
                                             <FaRegHeart className='icon-cart' />
                                             <span>Thêm vào yêu thích</span>
                                         </button>
                                         <button
                                             className='now'
-                                            onClick={() => handleBuyNow(currentQuantity, dataResume)}
                                         >Đặt lịch hẹn</button>
                                     </div>
                                 </Col>
@@ -124,15 +75,8 @@ const ResumeDetail = (props) => {
                     }
                 </div>
             </div>
-            {/* <ModalGallery
-                isOpen={isOpenModalGallery}
-                setIsOpen={setIsOpenModalGallery}
-                currentIndex={currentIndex}
-                items={images}
-                title={dataBook?.mainText}
-            /> */}
         </div>
-
     )
 }
+
 export default ResumeDetail;

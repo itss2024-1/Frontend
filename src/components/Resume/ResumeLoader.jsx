@@ -38,4 +38,5 @@ const ResumeLoader = () => {
         </>
     )
 }
+
 export default ResumeLoader;

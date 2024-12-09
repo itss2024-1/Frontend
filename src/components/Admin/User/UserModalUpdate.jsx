@@ -1,5 +1,6 @@
 import { Form, Input, message, Modal, notification } from "antd";
 import { useEffect, useState } from "react";
+
 import { callUpdateUser } from "../../../services/api";
 
 const UserModalUpdate = (props) => {
@@ -35,11 +36,9 @@ const UserModalUpdate = (props) => {
 
     useEffect(() => {
         if (openModalUpdate && dataUserUpdate) {
-            form.setFieldsValue(dataUserUpdate); // Set form values when modal opens and dataUserUpdate is available
+            form.setFieldsValue(dataUserUpdate);
         }
-    }, [openModalUpdate, dataUserUpdate, form]); // Include openModalUpdate as a dependency
-
-
+    }, [openModalUpdate, dataUserUpdate, form]);
 
     return (
         <>
@@ -50,9 +49,8 @@ const UserModalUpdate = (props) => {
                 okText={"Tạo mới"}
                 cancelText={"Hủy"}
                 confirmLoading={isSubmit}>
-
                 <Form
-                    form={form} // Đảm bảo truyền form vào đây
+                    form={form}
                     name="basic"
                     style={{ maxWidth: 600 }}
                     onFinish={onFinish}

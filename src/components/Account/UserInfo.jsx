@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Avatar, Button, Col, Form, Input, message, Modal, Row, Upload } from "antd";
+import { Avatar, Button, Col, Form, Input, message, Row, Upload } from "antd";
 import { AntDesignOutlined, UploadOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
+
 import { doUpdateUserInfoAction, doUploadAvatarAction } from "../../redux/slice/accountSlide";
 import { callUpdateUser, callUploadSingleFile } from "../../services/api";
 
-const UserInfo = (props) => {
+const UserInfo = () => {
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const user = useSelector(state => state.account.user);
@@ -50,12 +51,8 @@ const UserInfo = (props) => {
         const res = await callUpdateUser({ name, phone, id, avatar: userAvatar });
 
         if (res && res.data) {
-            //update redux
             dispatch(doUpdateUserInfoAction({ avatar: userAvatar, phone, name }));
             message.success("Cập nhật thông tin user thành công");
-
-            //force renew token
-            // localStorage.removeItem('access_token');
         } else {
             notification.error({
                 message: "Đã có lỗi xảy ra",
@@ -98,7 +95,6 @@ const UserInfo = (props) => {
                             label="Id"
                             name="id"
                             initialValue={user?.id}
-
                         >
                             <Input disabled hidden />
                         </Form.Item>
@@ -108,7 +104,6 @@ const UserInfo = (props) => {
                             label="Email"
                             name="email"
                             initialValue={user?.email}
-
                         >
                             <Input disabled />
                         </Form.Item>

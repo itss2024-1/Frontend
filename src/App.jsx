@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
 import NotFound from './pages/Errors/NotFound'
 import Footer from './components/Footer'
@@ -8,7 +9,6 @@ import LayoutAdmin from './components/Admin/LayoutAdmin'
 import AdminPage from './pages/Admin/AdminPage'
 import LoginPage from './pages/Login/Login'
 import { fetchAccount } from './redux/slice/accountSlide'
-import { useDispatch, useSelector } from 'react-redux'
 import Home from './pages/Client/Home/Home'
 import UserPage from './pages/Admin/User/UserPage'
 import ResumePage from './pages/Client/Resume/ResumePage'
@@ -57,7 +57,6 @@ const router = createBrowserRouter([
 
 const App = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(state => state.account.isLoading);
 
   useEffect(() => {
     if (
