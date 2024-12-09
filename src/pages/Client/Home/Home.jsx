@@ -4,22 +4,22 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
 
 import './home.scss'
+import { callFetchResume } from "../../../services/api";
 
 const Home = () => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
     // const [searchTerm, setSearchTerm] = useOutletContext();
 
-    const [listCategory, setListCategory] = useState([])
     const [isLoading, setIsLoading] = useState(false);
 
-    const [listBook, setListBook] = useState([]);
+    const [listResume, setListResume] = useState([]);
     const [current, setCurrent] = useState(1);
     const [pageSize, setPageSize] = useState(5);
     const [total, setTotal] = useState(0);
 
     const [filter, setFilter] = useState("");
-    const [sortQuery, setSortQuery] = useState("sort=-sold");
+    const [sort, setSort] = useState("name,asc");
 
     const items = [
         {
@@ -45,6 +45,7 @@ const Home = () => {
     ];
 
     const nonAccentVietnamese = (str) => {
+        if (typeof str !== 'string') return '';
         str = str.replace(/A|Á|À|Ã|Ạ|Â|Ấ|Ầ|Ẫ|Ậ|Ă|Ắ|Ằ|Ẵ|Ặ/g, "A");
         str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
         str = str.replace(/E|É|È|Ẽ|Ẹ|Ê|Ế|Ề|Ễ|Ệ/, "E");
@@ -82,6 +83,36 @@ const Home = () => {
             .replace(/-+/g, '-'); // collapse dashes
 
         return str;
+    }
+
+    useEffect(() => {
+        fetchResume();
+    }, [current, pageSize, sort]);
+
+    const fetchResume = async () => {
+        setIsLoading(true)
+        const res = await callFetchResume(current - 1, pageSize, sort);
+        if (res && res.data) {
+            setListResume(res.data.data.result);
+            setTotal(res.data.data.meta.total)
+        }
+        setIsLoading(false)
+    }
+
+    const handleOnchangePage = (pagination) => {
+        console.log(">> handleOnchangePage", pagination);
+        if (pagination && pagination.current !== current) {
+            setCurrent(pagination.current)
+        }
+        if (pagination && pagination.pageSize !== pageSize) {
+            setPageSize(pagination.pageSize)
+            setCurrent(0);
+        }
+    }
+
+    const handleRedirectResume = (resume) => {
+        const slug = convertSlug(resume.name);
+        navigate(`/resumes/${slug}?id=${resume.id}`)
     }
 
     const onFinish = () => {
@@ -135,7 +166,7 @@ const Home = () => {
                                     >
                                         <Checkbox.Group>
                                             <Row>
-                                                {listCategory?.map((item, index) => {
+                                                {listResume?.map((item, index) => {
                                                     return (
                                                         <Col span={24} key={`index-${index}`} style={{ padding: '7px 0' }}>
                                                             <Checkbox value={item.value} >
@@ -220,7 +251,7 @@ const Home = () => {
                                         <Tabs
                                             defaultActiveKey="sort=-sold"
                                             items={items}
-                                            onChange={(value) => { setSortQuery(value) }}
+                                            onChange={(value) => { setSort(value) }}
                                             style={{ overflowX: "auto" }}
                                         />
                                         {/* <Col xs={24} md={0}>
@@ -235,17 +266,15 @@ const Home = () => {
                                         <br />
                                     </Row>
                                     <Row className='customize-row'>
-                                        {listBook?.map((item, index) => {
+                                        {listResume?.map((item, index) => {
                                             return (
-                                                <div className="column" key={`book-${index}`} onClick={() => handleRedirectBook(item)}>
+                                                <div className="column" key={`book-${index}`} onClick={() => handleRedirectResume(item)}>
                                                     <div className='wrapper'>
                                                         <div className='thumbnail'>
-                                                            <img src={`${import.meta.env.VITE_BACKEND_URL}/images/book/${item.thumbnail}`} alt="thumbnail book" />
+                                                            <img src={`${import.meta.env.VITE_BACKEND_URL}storage/resume/${item.images}`} alt="thumbnail book" />
                                                         </div>
-                                                        <div className='text' title={item.mainText}>{item.mainText}</div>
-                                                        <div className='price'>
-                                                            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item?.price ?? 0)}
-                                                        </div>
+                                                        <div className='text' title={item.description}>{item.description}</div>
+                                                        <div className='text' title={item.name}>{item.name}</div>
                                                         <div className='rating'>
                                                             <Rate value={5} disabled style={{ color: '#ffce3d', fontSize: 10 }} />
                                                             <span>Đã bán {item.sold}</span>
@@ -255,13 +284,12 @@ const Home = () => {
                                             )
                                         })}
 
-                                        {listBook.length === 0 &&
+                                        {listResume.length === 0 &&
                                             <div style={{ width: "100%", margin: "0 auto" }}>
                                                 <Empty
                                                     description="Không có dữ liệu"
                                                 />
                                             </div>
-
                                         }
                                     </Row>
                                     <div style={{ marginTop: 30 }}></div>

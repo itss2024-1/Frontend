@@ -46,4 +46,13 @@ export const callUploadSingleFile = (file, folderType) => {
     });
 }
 
+// resume
+
+export const callFetchResume = (page, size, sort) => {
+    return axios.get(`/api/v1/resumes/all?page=${page}&size=${size}&sort=${sort}`)
+}
+
+export const callFetchResumeById = (id) => {
+    return axios.get(`/api/v1/resumes/${id}`)
+}
 

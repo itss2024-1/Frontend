@@ -11,6 +11,7 @@ import { fetchAccount } from './redux/slice/accountSlide'
 import { useDispatch, useSelector } from 'react-redux'
 import Home from './pages/Client/Home/Home'
 import UserPage from './pages/Admin/User/UserPage'
+import ResumePage from './pages/Client/Resume/ResumePage'
 
 const Layout = () => {
 
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       { index: true, element: <Home /> },
+      {
+        path: "resumes/:slug",
+        element: <ResumePage />
+      },
     ]
   },
   {
