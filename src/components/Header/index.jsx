@@ -1,25 +1,27 @@
 import { FaReact } from "react-icons/fa";
 import { VscSearchFuzzy } from "react-icons/vsc";
-import { Avatar, Badge, Divider, Dropdown, Popover, Space } from "antd";
+import { Avatar, Badge, Divider, Dropdown, Empty, Popover, Space } from "antd";
 import { FiShoppingCart } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 
 import { callLogout } from "../../services/api";
 import ManageAccount from "../Account/ManageAccount";
 import "./header.scss"
 
-
 const Header = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const isAuthenticated = useSelector(state => state.account.isAuthenticated);
     const user = useSelector(state => state.account.user);
     const [isInfor, setIsInfor] = useState(false);
 
-    const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}storage/avatar/${user?.avatar}`;
+    const orderList = useSelector(state => state.myOrder.orderList);
 
+    const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}storage/avatar/${user?.avatar}`;
 
     const handleLogout = async () => {
         const res = await callLogout();
@@ -54,7 +56,28 @@ const Header = () => {
             <>
                 <div className='pop-cart-body'>
                     <div className='pop-cart-content'>
+                        {orderList?.map((resume, index) => {
+                            return (
+                                <>
+                                    <div className='book' key={`book-${index}`}>
+                                        <img src={`${import.meta.env.VITE_BACKEND_URL}storage/resume/${resume?.image}`} />
+                                        <div>{resume?.detail?.mainText}</div>
+                                        <div className='price'>
+                                            <span>{resume?.name}</span>
+                                        </div>
+                                    </div>
+                                </>
+                            )
+                        })}
                     </div>
+                    {Array.isArray(orderList) && orderList.length > 0 ? <div className='pop-cart-footer'>
+                        <button onClick={() => navigate('/')}>Danh sách đăng ký</button>
+                    </div>
+                        :
+                        <Empty
+                            description="Không có cuộc hẹn nào"
+                        />
+                    }
                 </div>
             </>
         )
@@ -81,7 +104,7 @@ const Header = () => {
                     <nav className="page-header__bottom">
                         <ul id="navigation" className="navigation">
                             <li className="navigation__item">
-                                <Popover placement="bottomRight" title={"Sản phẩm mới thêm"} content={contentPopover}>
+                                <Popover placement="bottomRight" title={"Cuộc hẹn mới thêm"} content={contentPopover}>
                                     <Badge
                                         size={"small"}
                                         showZero

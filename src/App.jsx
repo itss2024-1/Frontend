@@ -12,6 +12,7 @@ import { fetchAccount } from './redux/slice/accountSlide'
 import Home from './pages/Client/Home/Home'
 import UserPage from './pages/Admin/User/UserPage'
 import ResumePage from './pages/Client/Resume/ResumePage'
+import ResumeTable from './components/Admin/Resume/ResumeTable'
 
 const Layout = () => {
 
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "users",
         element: <UserPage />,
+      },
+      {
+        path: "resumes",
+        element: <ResumeTable />,
       },
     ]
   },

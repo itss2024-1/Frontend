@@ -1,12 +1,21 @@
 import { Row, Col, Rate, Breadcrumb } from 'antd';
 import { HomeOutlined } from '@ant-design/icons';
 import { FaRegHeart } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ResumeLoader from './ResumeLoader';
 import './resume.scss'
+import { useDispatch } from 'react-redux';
+import { doAddOrderAction } from '../../redux/slice/orderSlide';
 
 const ResumeDetail = (props) => {
     const { dataResume: dataResume } = props;
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleAddToOrder = () => {
+        // Add to order
+        dispatch(doAddOrderAction({ id: dataResume.id, name: dataResume.name, image: dataResume.images }));
+    }
 
     return (
         <div style={{ background: '#efefef', padding: "20px 0" }}>
@@ -65,6 +74,7 @@ const ResumeDetail = (props) => {
                                         </button>
                                         <button
                                             className='now'
+                                            onClick={handleAddToOrder}
                                         >Đặt lịch hẹn</button>
                                     </div>
                                 </Col>

@@ -32,8 +32,8 @@ const LayoutAdmin = () => {
             icon: <TeamOutlined />,
         },
         {
-            label: <Link to='/admin/schools'>Quản lý trường học</Link>,
-            key: 'schools',
+            label: <Link to='/admin/resumes'>Quản lý CV</Link>,
+            key: 'resumes',
             icon: <ExceptionOutlined />
         },
 
