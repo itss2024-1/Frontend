@@ -13,6 +13,7 @@ import Home from './pages/Client/Home/Home'
 import UserPage from './pages/Admin/User/UserPage'
 import ResumePage from './pages/Client/Resume/ResumePage'
 import ResumeTable from './components/Admin/Resume/ResumeTable'
+import ScheduleTable from './components/Schedule/ScheduleTable'
 
 const Layout = () => {
 
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "resumes/:slug",
         element: <ResumePage />
+      },
+      {
+        path: "schedules",
+        element: <ScheduleTable />
       },
     ]
   },

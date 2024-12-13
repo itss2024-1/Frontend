@@ -60,7 +60,7 @@ const Header = () => {
                             return (
                                 <>
                                     <div className='book' key={`book-${index}`}>
-                                        <img src={`${import.meta.env.VITE_BACKEND_URL}storage/resume/${resume?.image}`} />
+                                        <img src={`${resume?.image}`} />
                                         <div>{resume?.detail?.mainText}</div>
                                         <div className='price'>
                                             <span>{resume?.name}</span>
@@ -71,7 +71,7 @@ const Header = () => {
                         })}
                     </div>
                     {Array.isArray(orderList) && orderList.length > 0 ? <div className='pop-cart-footer'>
-                        <button onClick={() => navigate('/')}>Danh sách đăng ký</button>
+                        <button onClick={() => navigate('/schedules')}>Danh sách đăng ký</button>
                     </div>
                         :
                         <Empty
