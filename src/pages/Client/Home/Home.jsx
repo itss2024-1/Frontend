@@ -5,10 +5,14 @@ import { Link, useNavigate } from "react-router-dom";
 
 import './home.scss'
 import { callFetchResume } from "../../../services/api";
+import { useDispatch, useSelector } from "react-redux";
 
 const Home = () => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const user = useSelector(state => state.account.user);
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -22,23 +26,28 @@ const Home = () => {
 
     const items = [
         {
-            key: "sort=-sold",
+            key: "asc",
             label: `Nổi tiếng`,
             children: <></>,
         },
         {
-            key: 'sort=-updatedAt',
+            key: 'createdAt,asc',
             label: `Giáo viên mới`,
             children: <></>,
         },
         {
-            key: 'sort=price',
+            key: 'name',
             label: `Trình độ thấp đến cao`,
             children: <></>,
         },
         {
-            key: 'sort=-price',
+            key: 'desc',
             label: `Trình độ Cao Đến Thấp`,
+            children: <></>,
+        },
+        {
+            key: `&userName=${user.name}`,
+            label: `Hồ sơ của tôi`,
             children: <></>,
         },
     ];
@@ -245,7 +254,7 @@ const Home = () => {
                                 <div style={{ padding: "20px", background: '#fff', borderRadius: 5 }}>
                                     <Row >
                                         <Tabs
-                                            defaultActiveKey="sort=-sold"
+                                            defaultActiveKey="sort=-name,asc"
                                             items={items}
                                             onChange={(value) => { setSort(value) }}
                                             style={{ overflowX: "auto" }}

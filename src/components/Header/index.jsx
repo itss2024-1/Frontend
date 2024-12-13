@@ -37,6 +37,10 @@ const Header = () => {
             key: 'account',
         },
         {
+            label: <Link to="/resume">Hồ sơ cá nhân</Link>,
+            key: 'resume',
+        },
+        {
             label: <Link to="/history">Lịch sử mua hàng</Link>,
             key: 'history',
         },
