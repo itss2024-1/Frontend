@@ -58,3 +58,7 @@ export const callFetchResumeById = (id) => {
     return axios.get(`/api/v1/resumes/${id}`)
 }
 
+export const callCreateResume = (data) => {
+    return axios.post(`/api/v1/resumes`, data)
+}
+
