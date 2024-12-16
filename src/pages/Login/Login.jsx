@@ -1,110 +1,63 @@
-import React, { useState } from 'react';
-import { Button, Checkbox, Form, Input, message, notification } from 'antd';
+// eslint-disable-next-line no-unused-vars
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-
-import { login } from '../../services/api';
-import { doLoginAction } from '../../redux/slice/accountSlide';
+import '../Login/style.css';
 
 const LoginPage = () => {
-
-    const [isSubmit, setIsSubmit] = useState(false);
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
-    const onFinish = async (values) => {
-        const { username, password } = values;
-
-        setIsSubmit(true);
-        const res = await login(username, password);
-        setIsSubmit(false);
-
-        if (res?.data?.user) {
-            localStorage.setItem('access_token', res.data.access_token)
-            dispatch(doLoginAction(res.data))
-            message.success("Đăng nhập người dùng thành công!!!");
-            navigate('/')
-        }
-        else {
-            notification.error({
-                message: "Have error!!!",
-                description: res.message,
-                duration: 5
-            })
-        }
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        message.success("Có lỗi xảy ra!!!", errorInfo);
+    const handleRegisterRedirect = () => {
+        navigate('/register');
     };
 
     return (
-        <div className='register-page' style={{ padding: '50px' }}>
-            <h3 style={{ textAlign: 'center' }}>Đăng nhập</h3>
-            <Form
-                name="basic"
-                labelCol={{
-                    span: 6,
-                }}
-                style={{
-                    maxWidth: 600, margin: "0 auto"
-                }}
-                initialValues={{
-                    remember: true,
-                }}
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-                autoComplete="off"
-            >
-                <Form.Item
-                    label="Email"
-                    name="username"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your email!',
-                        },
-                    ]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    label="Password"
-                    name="password"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your password!',
-                        },
-                    ]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    name="remember"
-                    valuePropName="checked"
-                    wrapperCol={{
-                        offset: 8,
-                        span: 16,
-                    }}
-                >
-                    <Checkbox>Remember me</Checkbox>
-                </Form.Item>
-
-                <Form.Item
-                    wrapperCol={{
-                        offset: 8,
-                        span: 16,
-                    }}
-                >
-                    <Button type="primary" htmlType="submit" loading={isSubmit}>
-                        Submit
-                    </Button>
-                </Form.Item>
-            </Form>
+        <div>
+            <h1>EXISTING LOGIN FORM</h1>
+            <div className="w3layoutscontaineragileits">
+                <h2>Login here</h2>
+                <form action="#" method="post">
+                    <input
+                        type="email"
+                        name="Username"
+                        placeholder="EMAIL"
+                        required
+                    />
+                    <input
+                        type="password"
+                        name="Password"
+                        placeholder="PASSWORD"
+                        required
+                    />
+                    <ul className="agileinfotickwthree">
+                        <li>
+                            <input
+                                type="checkbox"
+                                id="brand1"
+                                value=""
+                            />
+                            <label htmlFor="brand1">
+                                <span></span>Remember me
+                            </label>
+                            <a href="#">Forgot password?</a>
+                        </li>
+                    </ul>
+                    <div className="aitssendbuttonw3ls">
+                        <input type="submit" value="LOGIN" />
+                        <p>
+                            To register new account <span>→</span>{' '}
+                            <a
+                                className="w3_play_icon1"
+                                onClick={handleRegisterRedirect}
+                            >
+                                Click Here
+                            </a>
+                        </p>
+                        <div className="clear"></div>
+                    </div>
+                </form>
+            </div>
         </div>
-    )
+    );
 };
+
 export default LoginPage;

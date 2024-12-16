@@ -8,12 +8,12 @@ import Header from './components/Header'
 import LayoutAdmin from './components/Admin/LayoutAdmin'
 import AdminPage from './pages/Admin/AdminPage'
 import LoginPage from './pages/Login/Login'
+import RegisterPage from './pages/Register/Register'
 import { fetchAccount } from './redux/slice/accountSlide'
 import Home from './pages/Client/Home/Home'
 import UserPage from './pages/Admin/User/UserPage'
 import ResumePage from './pages/Client/Resume/ResumePage'
 import ResumeTable from './components/Admin/Resume/ResumeTable'
-
 const Layout = () => {
 
   return (
@@ -58,6 +58,10 @@ const router = createBrowserRouter([
     path: "/login",
     element: <LoginPage />,
   },
+  {
+    path: "/register",
+    element: <RegisterPage />
+  }
 ])
 
 const App = () => {
