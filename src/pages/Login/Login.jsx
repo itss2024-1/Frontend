@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { Button, Checkbox, Form, Input, message, notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -5,10 +6,11 @@ import { useDispatch } from 'react-redux';
 
 import { login } from '../../services/api';
 import { doLoginAction } from '../../redux/slice/accountSlide';
+import RegisterPage from '../Register/Register'; // Import RegisterPage
 
 const LoginPage = () => {
-
     const [isSubmit, setIsSubmit] = useState(false);
+    const [isRegistering, setIsRegistering] = useState(false); // Trạng thái hiển thị đăng ký
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -20,91 +22,147 @@ const LoginPage = () => {
         setIsSubmit(false);
 
         if (res?.data?.user) {
-            localStorage.setItem('access_token', res.data.access_token)
-            dispatch(doLoginAction(res.data))
+            localStorage.setItem('access_token', res.data.access_token);
+            dispatch(doLoginAction(res.data));
             message.success("Đăng nhập người dùng thành công!!!");
-            navigate('/')
-        }
-        else {
+            navigate('/');
+        } else {
             notification.error({
-                message: "Have error!!!",
+                message: "Có lỗi!!!",
                 description: res.message,
-                duration: 5
-            })
+                duration: 5,
+            });
         }
     };
 
     const onFinishFailed = (errorInfo) => {
-        message.success("Có lỗi xảy ra!!!", errorInfo);
+        message.error("Có lỗi xảy ra!!!", errorInfo);
     };
 
+    if (isRegistering) {
+        // Hiển thị RegisterPage khi ở trạng thái đăng ký
+        return <RegisterPage onClose={() => setIsRegistering(false)} />;
+    }
+
     return (
-        <div className='register-page' style={{ padding: '50px' }}>
-            <h3 style={{ textAlign: 'center' }}>Đăng nhập</h3>
-            <Form
-                name="basic"
-                labelCol={{
-                    span: 6,
-                }}
+        <div
+            className="login-page"
+            style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100vh',
+                background: `url('backgrounds.jpeg') no-repeat center center`,
+                backgroundSize: 'cover',
+                backgroundAttachment: 'fixed', //  // Đảm bảo hình ảnh phủ đầy toàn bộ phần tử
+            }}
+        >
+            <div
                 style={{
-                    maxWidth: 600, margin: "0 auto"
+                    padding: '20px',
+                    background: '#fff',
+                    borderRadius: '10px',
+                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
                 }}
-                initialValues={{
-                    remember: true,
-                }}
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-                autoComplete="off"
             >
-                <Form.Item
-                    label="Email"
-                    name="username"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your email!',
-                        },
-                    ]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    label="Password"
-                    name="password"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your password!',
-                        },
-                    ]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    name="remember"
-                    valuePropName="checked"
-                    wrapperCol={{
-                        offset: 8,
-                        span: 16,
+                <h3 style={{ textAlign: 'center', marginBottom: '20px' }}>Đăng nhập</h3>
+                <Form
+                    name="basic"
+                    labelCol={{
+                        span: 7,
                     }}
-                >
-                    <Checkbox>Remember me</Checkbox>
-                </Form.Item>
-
-                <Form.Item
                     wrapperCol={{
-                        offset: 8,
-                        span: 16,
+                        span: 17,
                     }}
+                    style={{
+                        maxWidth: '400px',
+                        margin: '0 auto',
+                    }}
+                    initialValues={{
+                        remember: true,
+                    }}
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
+                    autoComplete="off"
                 >
-                    <Button type="primary" htmlType="submit" loading={isSubmit}>
-                        Submit
-                    </Button>
-                </Form.Item>
-            </Form>
-        </div>
-    )
+                    <Form.Item
+                        label="Email:"
+                        name="username"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your email!',
+                            },
+                        ]}
+                    >
+                        <Input style={{ height: '35px', borderRadius: '5px' }} />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Password:"
+                        name="password"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your password!',
+                            },
+                        ]}
+                        style={{ marginBottom: '20px' }}
+                    >
+                        <Input.Password style={{ height: '35px', borderRadius: '5px' }} />
+                    </Form.Item>
+
+                    <Form.Item
+                        name="remember"
+                        valuePropName="checked"
+                        wrapperCol={{
+                            offset: 7,
+                            span: 17,
+                        }}
+                        style={{ marginBottom: '20px' }}
+                    >
+                        <Checkbox>Remember me</Checkbox>
+                    </Form.Item>
+
+                    <Form.Item
+                        wrapperCol={{
+                            span: 24,
+                        }}
+                        style={{ textAlign: 'center', marginBottom: '10px' }}
+                    >
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                            loading={isSubmit}
+                            style={{
+                                width: '150px',
+                                borderRadius: '5px',
+                                marginBottom: '10px',
+                                backgroundColor: '#FF4D4F', // Nút đỏ
+                                borderColor: '#FF4D4F', // Biên đỏ
+                                color: 'white', // Chữ trắng
+                            }}
+                        >
+                            Đăng nhập
+                        </Button>
+                        <Button
+                            type="default"
+                            onClick={() => setIsRegistering(true)} // Chuyển sang đăng ký
+                            style={{
+                                width: '150px',
+                                borderRadius: '5px',
+                                backgroundColor: '#FF4D4F', // Nút đỏ
+                                borderColor: '#FF4D4F', // Biên đỏ
+                                color: 'white', // Chữ trắng
+                            }}
+                        >
+                            Đăng ký
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </div>
+        </div >
+    );
 };
+
 export default LoginPage;
