@@ -1,27 +1,18 @@
 import { Row, Col, Rate, Breadcrumb } from 'antd';
 import { HomeOutlined } from '@ant-design/icons';
 import { FaRegHeart } from "react-icons/fa";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ResumeLoader from './ResumeLoader';
-import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 
-import { doAddOrderAction } from '../../redux/slice/orderSlide';
 import SchedulePopup from './SchedulePopup';
 import './resume.scss'
 
 
 const ResumeDetail = (props) => {
     const { dataResume: dataResume } = props;
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const [isOpenSchedule, setIsOpenSchedule] = useState(false);
-
-    const handleAddToOrder = () => {
-        // Add to order
-        dispatch(doAddOrderAction({ id: dataResume.id, name: dataResume.name, image: dataResume.images }));
-    }
 
     return (
         <div style={{ background: '#efefef', padding: "20px 0" }}>

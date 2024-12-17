@@ -13,9 +13,11 @@ const SchedulePopup = (props) => {
 
     // Danh sách các ngày bận (fake data)
     const busyDates = [
-        '12/12/2024',
-        '15/12/2024',
-        '20/12/2024',
+        '12-12-2024',
+        '15-12-2024',
+        '16-12-2024',
+        '17-12-2024',
+        '20-12-2024'
     ];
 
     // Hàm kiểm tra ngày có bị bận hay không
@@ -33,9 +35,7 @@ const SchedulePopup = (props) => {
                 : null,
             image: image
         };
-        console.log('Formatted Form values:', formattedValues);
         setIsSubmit(true);
-        // Handle form submission logic here
         dispatch(doAddOrderAction(formattedValues));
         setIsSubmit(false);
         setIsModalOpen(false);
@@ -89,6 +89,13 @@ const SchedulePopup = (props) => {
                                     rules={[{ required: true, message: 'Số điện thoại không được để trống!' }]}
                                 >
                                     <Input />
+                                </Form.Item>
+                                <Form.Item
+                                    labelCol={{ span: 24 }}
+                                    label="Mô tả"
+                                    name="description"
+                                >
+                                    <Input.TextArea rows={4} />
                                 </Form.Item>
                                 <Row gutter={16} justify="end">
                                     <Col span={7}>
