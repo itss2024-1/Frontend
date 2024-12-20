@@ -1,6 +1,6 @@
 import { FaReact } from "react-icons/fa";
 import { VscSearchFuzzy } from "react-icons/vsc";
-import { Avatar, Badge, Divider, Dropdown, Empty, Popover, Space } from "antd";
+import { Avatar, Badge, Divider, Dropdown, Empty, message, Popover, Space } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +11,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { callFetchResume, callFetchSchedule, callFetchScheduleByInviteeId, callLogout } from "../../services/api";
 import ManageAccount from "../Account/ManageAccount";
 import "./header.scss"
+import { doLogoutAction } from "../../redux/slice/accountSlide";
 
 const Header = () => {
     const navigate = useNavigate();
@@ -50,8 +51,15 @@ const Header = () => {
     const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}storage/avatar/${user?.avatar}`;
 
     const handleLogout = async () => {
-        const res = await callLogout();
-    }
+        try {
+            localStorage.removeItem('access_token');
+            dispatch(doLogoutAction());
+            navigate('/');
+            message.success('Đăng xuất thành công');
+        } catch (error) {
+            message.error('Có lỗi xảy ra khi đăng xuất');
+        }
+    };
 
     const items = [
         {

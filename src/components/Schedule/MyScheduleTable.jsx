@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
-import { Table, Tag } from "antd";
+import { message, Popconfirm, Table, Tag } from "antd";
 import { useEffect, useState } from "react";
 
-import { callFetchSchedule } from "../../services/api";
+import { callDeleteSchedule, callFetchSchedule } from "../../services/api";
+import { DeleteTwoTone } from "@ant-design/icons";
 
 const MyScheduleTable = () => {
     const [schedulesInvitee, setSchedulesInvitee] = useState([]);
@@ -34,6 +35,16 @@ const MyScheduleTable = () => {
         if (pagination && pagination.pageSize !== pageSize) {
             setPageSize(pagination.pageSize);
             setCurrent(0); // Reset to 0 when page size changes
+        }
+    };
+
+    const handleDeleteSchedule = async (id) => {
+        const res = await callDeleteSchedule(id);
+        if (res.status === 204) {
+            message.success("Xóa sự kiện thành công");
+            fetchSchedulesInvitee(); // Refresh danh sách sau khi xóa
+        } else {
+            message.error("Không thể xóa sự kiện");
         }
     };
 
@@ -86,6 +97,26 @@ const MyScheduleTable = () => {
             dataIndex: 'description',
             key: 'description',
         },
+        {
+            title: 'Action',
+            key: 'action',
+            render: (text, record) => (
+                <Popconfirm
+                    placement="leftTop"
+                    title={"Xác nhận xóa user"}
+                    description={"Bạn có chắc chắn muốn xóa sự kiện này này ?"}
+                    onConfirm={() => {
+                        handleDeleteSchedule(record.id)
+                    }}
+                    okText="Xác nhận"
+                    cancelText="Hủy"
+                >
+                    <span style={{ cursor: "pointer", margin: "0 20px" }}>
+                        <DeleteTwoTone twoToneColor="#ff4d4f" />
+                    </span>
+                </Popconfirm>
+            ),
+        }
     ];
     return (
         <>
