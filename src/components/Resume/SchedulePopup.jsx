@@ -1,11 +1,11 @@
 import { Button, Col, Form, Input, Modal, Row, DatePicker } from "antd";
 import { useState } from "react";
-import { doAddOrderAction } from "../../redux/slice/orderSlide";
 import { useDispatch } from "react-redux";
 import { FORMAT_DATE_DISPLAY } from "../../utils/constant";
+import { callCreateSchedule } from "../../services/api";
 
 const SchedulePopup = (props) => {
-    const { isModalOpen, setIsModalOpen, image } = props;
+    const { isModalOpen, setIsModalOpen, image, dataResume } = props;
 
     const [form] = Form.useForm();
     const dispatch = useDispatch();
@@ -28,16 +28,18 @@ const SchedulePopup = (props) => {
     };
 
     const onFinish = async (values) => {
+        setIsSubmit(true);
         const formattedValues = {
             ...values,
-            dateTime: values.dateTime
-                ? values.dateTime.format(FORMAT_DATE_DISPLAY)
+            time: values.time
+                ? values.time.format(FORMAT_DATE_DISPLAY)
                 : null,
-            image: image
+            imageUrl: image,
+            inviteeId: dataResume?.user.id,
         };
-        setIsSubmit(true);
-        dispatch(doAddOrderAction(formattedValues));
+        callCreateSchedule(formattedValues);
         setIsSubmit(false);
+        form.resetFields(); // Reset all form fields
         setIsModalOpen(false);
     };
 
@@ -102,7 +104,7 @@ const SchedulePopup = (props) => {
                                         <Form.Item
                                             labelCol={{ span: 24 }}
                                             label="Thời gian"
-                                            name="dateTime"
+                                            name="time"
                                             rules={[{ required: true, message: 'Vui lòng chọn ngày và thời gian bắt đầu!' }]}
                                         >
                                             <DatePicker

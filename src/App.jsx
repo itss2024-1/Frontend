@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import NotFound from './pages/Errors/NotFound'
 import Footer from './components/Footer'
@@ -15,6 +15,8 @@ import ResumePage from './pages/Client/Resume/ResumePage'
 import ResumeTable from './components/Admin/Resume/ResumeTable'
 import ScheduleTable from './components/Schedule/ScheduleTable'
 import MyResumeTable from './pages/Client/Resume/MyResumeTable'
+import MyScheduleTable from './components/Schedule/MyScheduleTable'
+import ScheduleWithOtherTable from './components/Schedule/ScheduleWithOtherTable'
 
 const Layout = () => {
 
@@ -40,7 +42,14 @@ const router = createBrowserRouter([
       },
       {
         path: "schedules",
-        element: <ScheduleTable />
+        element: <ScheduleTable />,
+        children: [
+          { index: true, element: <MyScheduleTable /> },
+          {
+            path: "invitee",
+            element: <ScheduleWithOtherTable />
+          }
+        ]
       },
       {
         path: "resume",

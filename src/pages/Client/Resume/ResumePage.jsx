@@ -16,7 +16,6 @@ const ResumePage = () => {
     }, [id]);
 
     const fetResume = async (id) => {
-        console.log("check param: ", id);
         const res = await callFetchResumeById(id);
         if (res && res.data) {
             setDataResume(res.data.data);

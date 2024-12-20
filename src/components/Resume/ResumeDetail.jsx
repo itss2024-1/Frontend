@@ -82,6 +82,7 @@ const ResumeDetail = (props) => {
                                 isModalOpen={isOpenSchedule}
                                 setIsModalOpen={setIsOpenSchedule}
                                 image={`${import.meta.env.VITE_BACKEND_URL}storage/resume/${dataResume.images}`}
+                                dataResume={dataResume}
                             ></SchedulePopup>
                         </>
                         :

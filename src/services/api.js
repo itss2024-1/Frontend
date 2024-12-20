@@ -62,3 +62,29 @@ export const callCreateResume = (data) => {
     return axios.post(`/api/v1/resumes`, data)
 }
 
+// schedule
+
+export const callFetchSchedule = (page, size, sort, name) => {
+    if (!name) {
+        return axios.get(`/api/v1/schedules/all?page=${page}&size=${size}&sort=${sort}`)
+    }
+    return axios.get(`/api/v1/schedules/all?userName=${name}&page=${page}&size=${size}&sort=${sort}`)
+}
+
+export const callFetchScheduleByInviteeId = (page, size, inviteeId) => {
+    return axios.get(`/api/v1/schedules/all/invitee?page=${page}&size=${size}&inviteeId=${inviteeId}`)
+}
+
+export const callCreateSchedule = (data) => {
+    return axios.post(`/api/v1/schedules`, data)
+}
+
+export const callUpdateSchedule = (data) => {
+    return axios.put(`/api/v1/schedules`, data)
+}
+
+export const callDeleteSchedule = (id) => {
+    return axios.delete(`/api/v1/schedules/${id}`)
+}
+
+
