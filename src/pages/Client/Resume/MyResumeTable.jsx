@@ -83,7 +83,7 @@ const MyResumeTable = () => {
     const renderHeader = () => {
         return (
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span><h1>Bảng danh sách giáo viên</h1></span>
+                <span><h1>Bảng hồ sơ của tôi</h1></span>
                 <span style={{ display: 'flex', gap: 15 }}>
                     <Button
                         icon={<ExportOutlined />}

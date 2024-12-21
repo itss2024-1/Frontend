@@ -1,72 +1,118 @@
-.homepage-container {
-    .customize-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px 10px; //gap 10px, có 5 items trên 1 row => 4*10 = 40px cần được bớt ở width. 40/5items = 8px => calc trừ đi 8px
+.home {
+  &-breadcrumb {
+    margin-bottom: 16px;
+  }
 
-        .column {
-            width: calc(20% - 8px);
+  &-content {
+    background: #fff;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 
-            &:hover {
-                box-shadow: 0 0.0625rem 20px 0 rgba(0, 0, 0, .05);
-                -webkit-transform: translateY(-0.0625rem);
-                transform: translateY(-0.0625rem);
-            }
+    &__header {
+      margin-bottom: 20px;
 
-            .wrapper {
-                cursor: pointer;
-                box-shadow: 0 0.0625rem 0.125rem 0 rgba(0, 0, 0, .1);
-                border-radius: 0.125rem;
-                padding: .3rem;
-
-                .text {
-                    padding: 0.5rem 0;
-                    font-size: .75rem;
-                    height: 50px;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 2;
-                    -webkit-box-orient: vertical;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                }
-
-                .rating {
-                    display: flex;
-                    align-items: center;
-                    gap: 10px;
-                }
-
-            }
-        }
-
-
-        .thumbnail {
-            max-height: 200px;
-            max-width: 200px;
-            margin: 0 auto;
-
-            img {
-                max-width: 100%;
-                max-height: 100%;
-                background-color: white;
-                object-fit: contain;
-            }
-        }
-
-        @media screen and (max-width: 600px) {
-            .column {
-                flex: unset;
-                width: calc(50% - 8px);
-                flex-wrap: wrap;
-            }
-        }
-
-        @media screen and (max-width: 800px) and (min-width: 601px) {
-            .column {
-                flex: unset;
-                width: calc(25% - 8px);
-                flex-wrap: wrap;
-            }
-        }
+      .ant-tabs-nav {
+        margin-bottom: 0;
+      }
     }
+
+    &__body {
+      min-height: 400px;
+    }
+
+    &__footer {
+      margin-top: 24px;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+.resume {
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 16px 0;
+  }
+
+  &-card {
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    &__image {
+      position: relative;
+      padding-top: 133%; // 4:3 aspect ratio
+
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &__info {
+      padding: 12px;
+    }
+
+    &__title {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &__description {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.4;
+    }
+
+    &__rating {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .ant-rate {
+        font-size: 14px;
+        color: #ffce3d;
+      }
+
+      span {
+        font-size: 12px;
+        color: #999;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .resume-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+  }
+
+  .home-content {
+    padding: 16px;
+  }
 }

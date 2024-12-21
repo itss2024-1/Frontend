@@ -17,15 +17,23 @@ import ScheduleTable from './components/Schedule/ScheduleTable'
 import MyResumeTable from './pages/Client/Resume/MyResumeTable'
 import MyScheduleTable from './components/Schedule/MyScheduleTable'
 import ScheduleWithOtherTable from './components/Schedule/ScheduleWithOtherTable'
+import SideBar from './components/SideBar/SideBar'
+import './app.scss'
 
 const Layout = () => {
 
   return (
-    <>
+    <div className="app-container">
       <Header />
-      <Outlet />
+      <div className="main-container">
+        <SideBar />
+        <div className="content">
+          <Outlet />
+          {/* content */}
+        </div>
+      </div>
       <Footer />
-    </>
+    </div>
   )
 }
 

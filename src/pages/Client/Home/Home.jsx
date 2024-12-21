@@ -1,5 +1,5 @@
-import { FilterTwoTone, HomeOutlined, ReloadOutlined } from "@ant-design/icons";
-import { Breadcrumb, Button, Checkbox, Col, Divider, Empty, Form, InputNumber, Pagination, Rate, Row, Spin, Tabs } from "antd";
+import { HomeOutlined } from "@ant-design/icons";
+import { Breadcrumb, Empty, Form, Pagination, Rate, Spin, Tabs } from "antd";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -21,7 +21,6 @@ const Home = () => {
     const [pageSize, setPageSize] = useState(5);
     const [total, setTotal] = useState(0);
 
-    const [filter, setFilter] = useState("");
     const [sort, setSort] = useState("name,asc");
 
     const items = [
@@ -126,185 +125,70 @@ const Home = () => {
 
     }
 
+
+
     return (
-        <>
-            <div style={{ background: '#efefef', padding: "20px 0" }}>
-                <div className="homepage-container" style={{ maxWidth: 1440, margin: '0 auto' }}>
-                    <Breadcrumb
-                        style={{ margin: '5px 0' }}
-                        items={[
-                            {
-                                title: <HomeOutlined />,
-                            },
-                            {
-                                title: (
-                                    <Link to={'/'}>
-                                        <span>Trang Chủ</span>
-                                    </Link>
-                                ),
-                            }
-                        ]}
-                    />
-                    <Row gutter={[20, 20]}>
-                        <Col md={4} sm={0} xs={0} >
-                            <div style={{ padding: "20px", background: '#fff', borderRadius: 5 }}>
-                                <div style={{ display: 'flex', justifyContent: "space-between" }}>
-                                    <span> <FilterTwoTone />
-                                        <span style={{ fontWeight: 500 }}> Bộ lọc tìm kiếm</span>
-                                    </span>
-                                    <ReloadOutlined title="Reset" onClick={() => {
-                                        form.resetFields();
-                                        setFilter('');
-                                        setSearchTerm('');
-                                    }}
-                                    />
-                                </div>
-                                <Divider />
-                                <Form
-                                    onFinish={onFinish}
-                                    form={form}
-                                >
-                                    <Form.Item
-                                        name="category"
-                                        label="Trường học"
-                                        labelCol={{ span: 24 }}
-                                    >
-                                        <Checkbox.Group>
-                                            <Row>
-                                                {listResume?.map((item, index) => {
-                                                    return (
-                                                        <Col span={24} key={`index-${index}`} style={{ padding: '7px 0' }}>
-                                                            <Checkbox value={item.value} >
-                                                                {item.label}
-                                                            </Checkbox>
-                                                        </Col>
-                                                    )
-                                                })}
-                                            </Row>
-                                        </Checkbox.Group>
-                                    </Form.Item>
-                                    <Divider />
-                                    <Form.Item
-                                        label="Trình độ"
-                                        labelCol={{ span: 24 }}
-                                    >
-                                        <Row gutter={[10, 10]} style={{ width: "100%" }}>
-                                            <Col xl={11} md={24}>
-                                                <Form.Item name={["range", 'from']}>
-                                                    <InputNumber
-                                                        name='from'
-                                                        min={0}
-                                                        placeholder="TỪ"
-                                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                                                        style={{ width: '100%' }}
-                                                    />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xl={2} md={0}>
-                                                <div > - </div>
-                                            </Col>
-                                            <Col xl={11} md={24}>
-                                                <Form.Item name={["range", 'to']}>
-                                                    <InputNumber
-                                                        name='to'
-                                                        min={0}
-                                                        placeholder="ĐẾN"
-                                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                                                        style={{ width: '100%' }}
-                                                    />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <div>
-                                            <Button onClick={() => form.submit()}
-                                                style={{ width: "100%" }} type='primary'>Áp dụng</Button>
+        <div className="home">
+            <Breadcrumb
+                className="home-breadcrumb"
+                items={[
+                    {
+                        title: <HomeOutlined />,
+                    },
+                    {
+                        title: (
+                            <Link to={'/'}>
+                                <span>Trang Chủ</span>
+                            </Link>
+                        ),
+                    }
+                ]}
+            />
+            <div className="home-content">
+                <Spin spinning={isLoading} tip="Loading...">
+                    <div className="home-content__header">
+                        <Tabs
+                            defaultActiveKey="sort=-name,asc"
+                            items={items}
+                            onChange={(value) => { setSort(value) }}
+                        />
+                    </div>
+                    <div className="home-content__body">
+                        {listResume?.length > 0 ? (
+                            <div className="resume-grid">
+                                {listResume.map((item, index) => (
+                                    <div className="resume-card" key={`resume-${index}`} onClick={() => handleRedirectResume(item)}>
+                                        <div className="resume-card__image">
+                                            <img src={`${import.meta.env.VITE_BACKEND_URL}storage/resume/${item.images}`} alt={item.name} />
                                         </div>
-                                    </Form.Item>
-                                    <Divider />
-                                    <Form.Item
-                                        label="Đánh giá"
-                                        labelCol={{ span: 24 }}
-                                    >
-                                        <div>
-                                            <Rate value={5} disabled style={{ color: '#ffce3d', fontSize: 15 }} />
-                                            <span className="ant-rate-text"></span>
-                                        </div>
-                                        <div>
-                                            <Rate value={4} disabled style={{ color: '#ffce3d', fontSize: 15 }} />
-                                            <span className="ant-rate-text">trở lên</span>
-                                        </div>
-                                        <div>
-                                            <Rate value={3} disabled style={{ color: '#ffce3d', fontSize: 15 }} />
-                                            <span className="ant-rate-text">trở lên</span>
-                                        </div>
-                                        <div>
-                                            <Rate value={2} disabled style={{ color: '#ffce3d', fontSize: 15 }} />
-                                            <span className="ant-rate-text">trở lên</span>
-                                        </div>
-                                        <div>
-                                            <Rate value={1} disabled style={{ color: '#ffce3d', fontSize: 15 }} />
-                                            <span className="ant-rate-text">trở lên</span>
-                                        </div>
-                                    </Form.Item>
-                                </Form>
-                            </div>
-                        </Col>
-                        <Col md={20} xs={24} >
-                            <Spin spinning={isLoading} tip="Loading...">
-                                <div style={{ padding: "20px", background: '#fff', borderRadius: 5 }}>
-                                    <Row >
-                                        <Tabs
-                                            defaultActiveKey="sort=-name,asc"
-                                            items={items}
-                                            onChange={(value) => { setSort(value) }}
-                                            style={{ overflowX: "auto" }}
-                                        />
-                                        <br />
-                                    </Row>
-                                    <Row className='customize-row'>
-                                        {listResume?.map((item, index) => {
-                                            return (
-                                                <div className="column" key={`book-${index}`} onClick={() => handleRedirectResume(item)}>
-                                                    <div className='wrapper'>
-                                                        <div className='thumbnail'>
-                                                            <img src={`${import.meta.env.VITE_BACKEND_URL}storage/resume/${item.images}`} alt="thumbnail book" />
-                                                        </div>
-                                                        <div className='text' title={item.description}>{item.description}</div>
-                                                        <div className='text' title={item.name}>{item.name}</div>
-                                                        <div className='rating'>
-                                                            <Rate value={5} disabled style={{ color: '#ffce3d', fontSize: 10 }} />
-                                                            <span>Đã bán {item.sold}</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            )
-                                        })}
-                                        {listResume.length === 0 &&
-                                            <div style={{ width: "100%", margin: "0 auto" }}>
-                                                <Empty
-                                                    description="Không có dữ liệu"
-                                                />
+                                        <div className="resume-card__info">
+                                            <h3 className="resume-card__title" title={item.name}>{item.name}</h3>
+                                            <p className="resume-card__description" title={item.description}>{item.description}</p>
+                                            <div className="resume-card__rating">
+                                                <Rate value={5} disabled />
+                                                <span>Đã bán {item.sold}</span>
                                             </div>
-                                        }
-                                    </Row>
-                                    <div style={{ marginTop: 30 }}></div>
-                                    <Row style={{ display: "flex", justifyContent: "center" }}>
-                                        <Pagination
-                                            current={current}
-                                            total={total}
-                                            pageSize={pageSize}
-                                            responsive
-                                            onChange={(p, s) => handleOnchangePage({ current: p, pageSize: s })}
-                                        />
-                                    </Row>
-                                </div>
-                            </Spin>
-                        </Col>
-                    </Row>
-                </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <Empty description="Không có dữ liệu" />
+                        )}
+                    </div>
+                    <div className="home-content__footer">
+                        <Pagination
+                            current={current}
+                            total={total}
+                            pageSize={pageSize}
+                            responsive
+                            onChange={(p, s) => handleOnchangePage({ current: p, pageSize: s })}
+                        />
+                    </div>
+                </Spin>
             </div>
-        </>
-    )
+        </div>
+    );
 }
 
 export default Home;
