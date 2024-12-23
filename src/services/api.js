@@ -62,6 +62,14 @@ export const callCreateResume = (data) => {
     return axios.post(`/api/v1/resumes`, data)
 }
 
+export const callUpdateResume = (data) => {
+    return axios.put(`/api/v1/resumes`, data)
+}
+
+export const callDeleteResume = (id) => {
+    return axios.delete(`/api/v1/resumes/${id}`)
+}
+
 // schedule
 
 export const callFetchSchedule = (page, size, sort, name) => {

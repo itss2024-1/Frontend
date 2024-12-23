@@ -63,15 +63,13 @@ const CreateResumeModel = (props) => {
                 description: res.message
             });
         }
-        console.log(values);
         setIsSubmit(false);
     };
 
     const handleFinish = (values) => {
         const formattedValues = {
             ...values,
-            jobTitle: values.jobTitle ? values.jobTitle.join(', ') : '',
-            image: uploadedImage,
+            images: uploadedImage,
         };
         onFinish(formattedValues);
     };
@@ -115,14 +113,6 @@ const CreateResumeModel = (props) => {
                                 wrapperCol={{ span: 24 }} // Increase the wrapper column span
                             >
                                 <Form.Item
-                                    hidden
-                                    label="Id"
-                                    name="id"
-                                    initialValue={user?.id}
-                                >
-                                    <Input disabled hidden />
-                                </Form.Item>
-                                <Form.Item
                                     label="Tên hiển thị"
                                     name="name"
                                     initialValue={user?.name}
@@ -136,13 +126,13 @@ const CreateResumeModel = (props) => {
                                     rules={[{ required: true, message: 'Vui lòng chọn ngành nghề!' }]}
                                 >
                                     <Select
-                                        mode="multiple"
                                         placeholder="Chọn ngành nghề"
                                     >
-                                        <Option value="developer">Developer</Option>
-                                        <Option value="designer">Designer</Option>
-                                        <Option value="manager">Manager</Option>
-                                        <Option value="teacher">Teacher</Option>
+                                        <Select.Option value="Giảng viên">Giảng viên</Select.Option>
+                                        <Select.Option value="Trưởng bộ môn">Trưởng bộ môn</Select.Option>
+                                        <Select.Option value="Phó Trưởng khoa">Trưởng khoa</Select.Option>
+                                        <Select.Option value="Phó Hiệu trưởng">Phó Hiệu trưởng</Select.Option>
+                                        <Select.Option value="Hiệu trưởng">Hiệu trưởng</Select.Option>
                                     </Select>
                                 </Form.Item>
                                 <Form.Item
@@ -151,8 +141,8 @@ const CreateResumeModel = (props) => {
                                     rules={[{ required: true, message: 'Vui lòng chọn trạng thái!' }]}
                                 >
                                     <Select placeholder="Chọn trạng thái">
-                                        <Option value="PUBLIC">PUBLIC</Option>
-                                        <Option value="PRIVATE">PRIVATE</Option>
+                                        <Select.Option value="PUBLIC">PUBLIC</Select.Option>
+                                        <Select.Option value="PRIVATE">PRIVATE</Select.Option>
                                     </Select>
                                 </Form.Item>
                                 <Form.Item
@@ -162,7 +152,12 @@ const CreateResumeModel = (props) => {
                                 >
                                     <Input.TextArea rows={4} />
                                 </Form.Item>
-                                {/* <Button loading={isSubmit} onClick={() => form.submit()}>Cập nhật</Button> */}
+                                <Form.Item
+                                    label="Giải thưởng"
+                                    name="reward"
+                                >
+                                    <Input.TextArea rows={4} />
+                                </Form.Item>
                             </Form>
                         </Col>
                     </Row>

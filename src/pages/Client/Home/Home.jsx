@@ -1,5 +1,5 @@
 import { HomeOutlined } from "@ant-design/icons";
-import { Breadcrumb, Empty, Form, Pagination, Rate, Spin, Tabs } from "antd";
+import { Breadcrumb, Empty, Form, Pagination, Rate, Spin, Tabs, Tag } from "antd";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -18,7 +18,7 @@ const Home = () => {
 
     const [listResume, setListResume] = useState([]);
     const [current, setCurrent] = useState(1);
-    const [pageSize, setPageSize] = useState(5);
+    const [pageSize, setPageSize] = useState(4);
     const [total, setTotal] = useState(0);
 
     const [sort, setSort] = useState("name,asc");
@@ -30,7 +30,7 @@ const Home = () => {
             children: <></>,
         },
         {
-            key: 'createdAt,asc',
+            key: 'createdAt,desc',
             label: `Giáo viên mới`,
             children: <></>,
         },
@@ -125,8 +125,6 @@ const Home = () => {
 
     }
 
-
-
     return (
         <div className="home">
             <Breadcrumb
@@ -163,11 +161,14 @@ const Home = () => {
                                         </div>
                                         <div className="resume-card__info">
                                             <h3 className="resume-card__title" title={item.name}>{item.name}</h3>
-                                            <p className="resume-card__description" title={item.description}>{item.description}</p>
-                                            <div className="resume-card__rating">
-                                                <Rate value={5} disabled />
-                                                <span>Đã bán {item.sold}</span>
+                                            <div className="resume-card__footer">
+                                                <div className="resume-card__status">
+                                                    <Tag color={item.status === 'PUBLIC' ? 'green' : 'orange'}>
+                                                        {item.jobTitle}
+                                                    </Tag>
+                                                </div>
                                             </div>
+                                            <div> created by: {item.user.name}</div>
                                         </div>
                                     </div>
                                 ))}
