@@ -1,9 +1,10 @@
 import { useSelector } from "react-redux";
-import { message, Popconfirm, Table, Tag } from "antd";
+import { Breadcrumb, message, Popconfirm, Table, Tag } from "antd";
 import { useEffect, useState } from "react";
 
 import { callDeleteSchedule, callFetchSchedule } from "../../services/api";
-import { DeleteTwoTone } from "@ant-design/icons";
+import { DeleteTwoTone, HomeOutlined } from "@ant-design/icons";
+import { Link, redirect, useNavigate } from "react-router-dom";
 
 const MyScheduleTable = () => {
     const [schedulesInvitee, setSchedulesInvitee] = useState([]);
@@ -12,11 +13,13 @@ const MyScheduleTable = () => {
     const [total, setTotal] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
 
+    const navigate = useNavigate();
+
     const user = useSelector(state => state.account.user);
 
     const fetchSchedulesInvitee = async () => {
         setIsLoading(true);
-        const res = await callFetchSchedule(current, pageSize, "createdAt,desc", user.name);
+        const res = await callFetchSchedule(current, pageSize, "createdAt,desc", user.id);
         if (res.status === 200) {
             setSchedulesInvitee(res.data.data.result);
             setTotal(res.data.data.meta.total);
@@ -54,9 +57,8 @@ const MyScheduleTable = () => {
             dataIndex: 'id',
             key: 'id',
             render: (text, record) => (
-                <a href='#' onClick={() => {
-                    setOpenViewDetail(true);
-                    setDataViewDetail(record);
+                <a onClick={() => {
+                    navigate(`/schedules/${record.id}`);
                 }}>{record.id}</a>
             ),
         },
@@ -120,6 +122,26 @@ const MyScheduleTable = () => {
     ];
     return (
         <>
+            <Breadcrumb
+                style={{ margin: '5px 0' }}
+                items={[
+                    {
+                        title: <HomeOutlined />,
+                    },
+                    {
+                        title: (
+                            <Link to={'/'}>
+                                <span>Trang Chủ</span>
+                            </Link>
+                        ),
+                    },
+                    {
+                        title: (
+                            <span>Sự kiện đã đăng ký</span>
+                        ),
+                    },
+                ]}
+            />
             <h1>Danh sách sự kiện đã đăng ký</h1>
             <Table
                 columns={columns}

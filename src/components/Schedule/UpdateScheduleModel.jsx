@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { callUpdateSchedule } from "../../services/api";
 
 const UpdateSceduleModel = (props) => {
-    const { openModelUpdate, setOpenModelUpdate, dataUpdate } = props;
+    const { openModelUpdate, setOpenModelUpdate, dataUpdate, fetchSchedulesInvitee } = props;
 
     const [isSubmit, setIsSubmit] = useState(false);
     const [form] = Form.useForm();
@@ -29,6 +29,7 @@ const UpdateSceduleModel = (props) => {
                 description: error.message,
             });
         } finally {
+            fetchSchedulesInvitee();
             setIsSubmit(false);
         }
     };

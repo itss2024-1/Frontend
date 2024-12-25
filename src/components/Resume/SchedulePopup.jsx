@@ -1,6 +1,8 @@
-import { Button, Col, Form, Input, Modal, Row, DatePicker } from "antd";
+import { Button, Col, Form, Input, Modal, Row, DatePicker, notification, message } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import moment from "moment";
+
 import { FORMAT_DATE_DISPLAY } from "../../utils/constant";
 import { callCreateSchedule } from "../../services/api";
 
@@ -13,40 +15,94 @@ const SchedulePopup = (props) => {
 
     // Danh sách các ngày bận (fake data)
     const busyDates = [
-        '12-12-2024',
-        '15-12-2024',
-        '16-12-2024',
-        '17-12-2024',
-        '20-12-2024'
+        {
+            date: '2024-12-23',
+            times: ['09:00', '10:00', '14:00']
+        },
+        {
+            date: '2024-12-25',
+            times: ['11:00', '15:00']
+        }
     ];
 
-    // Hàm kiểm tra ngày có bị bận hay không
     const isBusyDate = (current) => {
         if (!current) return false;
-        const formattedDate = current.format(FORMAT_DATE_DISPLAY);
-        return busyDates.includes(formattedDate);
+
+        // Check if the date is valid
+        if (!moment(current).isValid()) {
+            console.log('Invalid date');
+            return false;
+        }
+
+        // Find the busy date entry for current date
+        const busyDate = busyDates.find(busy =>
+            moment(busy.date).isSame(current, 'day')
+        );
+
+        if (busyDate) {
+            const currentTime = moment(current).format('HH:mm');
+            // Check if current time matches any busy time
+            return busyDate.times.includes(currentTime);
+        }
+
+        return false;
+    };
+
+    const disabledTime = (current) => {
+        if (!current || !moment(current).isValid()) return {};
+        const busyDate = busyDates.find(busyDate =>
+            moment(busyDate.date, 'YYYY-MM-DD').isSame(moment(current).startOf('day'), 'day')
+        );
+
+        if (busyDate) {
+            const busyTimes = busyDate.times.map(time => moment(time, 'HH:mm'));
+            const busyHours = Array.from(new Set(busyTimes.map(time => time.hour())));
+
+            return {
+                disabledHours: () =>
+                    Array.from({ length: 24 }, (_, hour) => (busyHours.includes(hour) ? hour : null)).filter(i => i !== null),
+                disabledMinutes: (selectedHour) => {
+                    const busyMinutes = busyTimes
+                        .filter(time => time.hour() === selectedHour)
+                        .map(time => time.minute());
+                    return Array.from({ length: 60 }, (_, minute) => (busyMinutes.includes(minute) ? minute : null)).filter(i => i !== null);
+                }
+            };
+        }
+
+        return {};
     };
 
     const onFinish = async (values) => {
+        console.log('values', dataResume);
         setIsSubmit(true);
         const formattedValues = {
             ...values,
-            time: values.time
-                ? values.time.format(FORMAT_DATE_DISPLAY)
-                : null,
-            imageUrl: image,
-            inviteeId: dataResume?.user.id,
+            time: values.time.format(FORMAT_DATE_DISPLAY),
+            resumeId: dataResume.id,
+            inviteeId: dataResume.user.id
         };
-        callCreateSchedule(formattedValues);
+
+        const res = await callCreateSchedule(formattedValues);
+        if (res && res?.data) {
+            message.success('Đăng ký lịch thành công!');
+        } else {
+            notification.error({
+                message: 'Có lỗi',
+                description: 'Đã có lỗi xảy ra!'
+            });
+        }
+
         setIsSubmit(false);
-        form.resetFields(); // Reset all form fields
+        form.resetFields();
         setIsModalOpen(false);
+
     };
 
     return (
         <>
             <Modal
-                title="Quản lý tài khoản"
+                title="Thông tin hẹn"
                 open={isModalOpen}
                 footer={null}
                 onCancel={() => setIsModalOpen(false)}
@@ -78,7 +134,7 @@ const SchedulePopup = (props) => {
                                 </Form.Item>
                                 <Form.Item
                                     labelCol={{ span: 24 }}
-                                    label="Tên hiển thị"
+                                    label="Tên sự kiện"
                                     name="name"
                                     rules={[{ required: true, message: 'Tên hiển thị không được để trống!' }]}
                                 >
@@ -94,7 +150,7 @@ const SchedulePopup = (props) => {
                                 </Form.Item>
                                 <Form.Item
                                     labelCol={{ span: 24 }}
-                                    label="Mô tả"
+                                    label="Mô tả "
                                     name="description"
                                 >
                                     <Input.TextArea rows={4} />
@@ -109,7 +165,9 @@ const SchedulePopup = (props) => {
                                         >
                                             <DatePicker
                                                 format={FORMAT_DATE_DISPLAY}
-                                                disabledDate={isBusyDate} // Áp dụng logic ngày bận
+                                                showTime={{ format: 'HH:mm' }}
+                                                disabledDate={isBusyDate} // Chỉ disable ngày bận
+                                                disabledTime={disabledTime} // Disable giờ bận và phút bận
                                             />
                                         </Form.Item>
                                     </Col>

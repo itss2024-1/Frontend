@@ -19,6 +19,7 @@ import MyScheduleTable from './components/Schedule/MyScheduleTable'
 import ScheduleWithOtherTable from './components/Schedule/ScheduleWithOtherTable'
 import SideBar from './components/SideBar/SideBar'
 import './app.scss'
+import ScheduleDetail from './components/Schedule/ScheduleDetail'
 
 const Layout = () => {
 
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
           {
             path: "invitee",
             element: <ScheduleWithOtherTable />
+          },
+          {
+            path: ":id",
+            element: <ScheduleDetail />
           }
         ]
       },

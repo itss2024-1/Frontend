@@ -13,6 +13,10 @@ export const callLogout = () => {
     return axios.post('/api/v1/auth/logout')
 }
 
+export const callRegister = (data) => {
+    return axios.post(`/api/v1/auth/register`, data)
+}
+
 // user
 
 export const callFetchUser = (page, size, sort) => {
@@ -29,6 +33,10 @@ export const callUpdateUser = (data) => {
 
 export const callDeleteUser = (id) => {
     return axios.delete(`/api/v1/users/${id}`)
+}
+
+export const callFetchUserById = (id) => {
+    return axios.get(`/api/v1/users/${id}`)
 }
 
 // file upload
@@ -72,15 +80,15 @@ export const callDeleteResume = (id) => {
 
 // schedule
 
-export const callFetchSchedule = (page, size, sort, name) => {
-    if (!name) {
+export const callFetchSchedule = (page, size, sort, id) => {
+    if (!id) {
         return axios.get(`/api/v1/schedules/all?page=${page}&size=${size}&sort=${sort}`)
     }
-    return axios.get(`/api/v1/schedules/all?userName=${name}&page=${page}&size=${size}&sort=${sort}`)
+    return axios.get(`/api/v1/schedules/all?userId=${id}&page=${page}&size=${size}&sort=${sort}`)
 }
 
 export const callFetchScheduleByInviteeId = (page, size, inviteeId) => {
-    return axios.get(`/api/v1/schedules/all/invitee?page=${page}&size=${size}&inviteeId=${inviteeId}`)
+    return axios.get(`/api/v1/schedules/all/invitee?page=${page}&size=${size}&inviteeId=${inviteeId}&sort=${"createdAt,desc"}`)
 }
 
 export const callCreateSchedule = (data) => {
@@ -95,4 +103,7 @@ export const callDeleteSchedule = (id) => {
     return axios.delete(`/api/v1/schedules/${id}`)
 }
 
+export const callFetchScheduleById = (id) => {
+    return axios.get(`/api/v1/schedules/${id}`)
+}
 

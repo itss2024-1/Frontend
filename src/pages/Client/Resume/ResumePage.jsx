@@ -5,7 +5,7 @@ import { callFetchResumeById } from "../../../services/api";
 import ResumeDetail from "../../../components/Resume/ResumeDetail";
 
 const ResumePage = () => {
-    const [dataBook, setDataResume] = useState()
+    const [dataResume, setDataResume] = useState()
     let location = useLocation();
 
     let params = new URLSearchParams(location.search);
@@ -25,7 +25,7 @@ const ResumePage = () => {
     return (
         <div>
             <h1>Resume Detail Page</h1>
-            <ResumeDetail dataResume={dataBook} />
+            <ResumeDetail dataResume={dataResume} />
         </div>
     );
 }

@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Table, Tag } from "antd";
+import { Breadcrumb, Popconfirm, Table, Tag } from "antd";
+import { DeleteTwoTone, EditTwoTone, HomeOutlined } from "@ant-design/icons";
+import { Link, useNavigate } from "react-router-dom";
 
 import { callFetchScheduleByInviteeId } from "../../services/api";
 import UpdateSceduleModel from "./UpdateScheduleModel";
+
 
 const ScheduleWithOtherTable = () => {
     const [openModelUpdate, setOpenModelUpdate] = useState(false);
@@ -15,6 +18,7 @@ const ScheduleWithOtherTable = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const user = useSelector(state => state.account.user);
+    const navigate = useNavigate();
 
     const fetchSchedulesInvitee = async () => {
         setIsLoading(true);
@@ -28,7 +32,7 @@ const ScheduleWithOtherTable = () => {
 
     useEffect(() => {
         fetchSchedulesInvitee();
-    }, [current, pageSize, user])
+    }, [current, pageSize])
 
     const onChange = async (pagination, filters, sorter, extra) => {
         if (pagination && pagination.current !== current + 1) {
@@ -45,10 +49,8 @@ const ScheduleWithOtherTable = () => {
             dataIndex: 'id',
             key: 'id',
             render: (text, record) => (
-                <a href='#' onClick={() => {
-                    console.log(record);
-                    setOpenModelUpdate(true);
-                    setDataUpdate(record);
+                <a onClick={() => {
+                    navigate(`/schedules/${record.id}`);
                 }}>{record.id}</a>
             ),
         },
@@ -85,13 +87,56 @@ const ScheduleWithOtherTable = () => {
             key: 'time',
         },
         {
-            title: 'Desciption',
-            dataIndex: 'description',
-            key: 'description',
-        },
+            title: 'Action',
+            render: (text, record, index) => {
+                return (
+                    <>
+                        <EditTwoTone
+                            twoToneColor="#f57800" style={{ cursor: "pointer" }}
+                            onClick={() => {
+                                setOpenModelUpdate(true);
+                                setDataUpdate(record);
+                            }}
+                        />
+                        <Popconfirm
+                            placement="leftTop"
+                            title={"Xác nhận xóa user"}
+                            description={"Bạn có chắc chắn muốn xóa user này ?"}
+                            onConfirm={() => handelDeleteResume(record.id)}
+                            okText="Xác nhận"
+                            cancelText="Hủy"
+                        >
+                            <span style={{ cursor: "pointer", margin: "0 20px" }}>
+                                <DeleteTwoTone twoToneColor="#ff4d4f" />
+                            </span>
+                        </Popconfirm>
+                    </>
+                );
+            }
+        }
     ];
     return (
         <>
+            <Breadcrumb
+                style={{ margin: '5px 0' }}
+                items={[
+                    {
+                        title: <HomeOutlined />,
+                    },
+                    {
+                        title: (
+                            <Link to={'/'}>
+                                <span>Trang Chủ</span>
+                            </Link>
+                        ),
+                    },
+                    {
+                        title: (
+                            <span>Sự kiện được mời</span>
+                        ),
+                    },
+                ]}
+            />
             <h1>Danh sách sự kiện được mời</h1>
             <Table
                 columns={columns}
@@ -111,6 +156,7 @@ const ScheduleWithOtherTable = () => {
                 openModelUpdate={openModelUpdate}
                 setOpenModelUpdate={setOpenModelUpdate}
                 dataUpdate={dataUpdate}
+                fetchSchedulesInvitee={fetchSchedulesInvitee}
             ></UpdateSceduleModel>
         </>
     )

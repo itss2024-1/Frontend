@@ -130,7 +130,7 @@ const MyResumeTable = () => {
         return (
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span>
-                    <h1>Bảng hồ sơ của tôi</h1>
+                    <h1>Danh sách hồ sơ của tôi</h1>
                 </span>
 
                 <span style={{ display: 'flex', gap: 15, marginTop: 35 }}>
@@ -155,7 +155,7 @@ const MyResumeTable = () => {
     const fetchResume = async () => {
         if (!user || !user.name) return;
         setIsLoading(true);
-        const res = await callFetchResume(current, pageSize, `name,desc&userName=${user.name}`);
+        const res = await callFetchResume(current, pageSize, `name,desc&userId=${user.id}`);
         if (res && res.data.data.meta.total) {
             setData(res.data.data.result);
             setTotal(res.data.data.meta.total);
@@ -209,9 +209,7 @@ const MyResumeTable = () => {
                     },
                     {
                         title: (
-                            <Link to={'/resume'}>
-                                <span>Danh sách CV</span>
-                            </Link>
+                            <span>Danh sách hồ sơ</span>
                         ),
                     }
                 ]}

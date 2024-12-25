@@ -26,7 +26,7 @@ const Home = () => {
     const items = [
         {
             key: "asc",
-            label: `Nổi tiếng`,
+            label: `Tất cả`,
             children: <></>,
         },
         {
@@ -45,7 +45,7 @@ const Home = () => {
             children: <></>,
         },
         {
-            key: `&userName=${user.name}`,
+            key: `&userId=${user.id}`,
             label: `Hồ sơ của tôi`,
             children: <></>,
         },

@@ -2,7 +2,6 @@ import { Menu } from 'antd';
 import { HomeOutlined, CalendarOutlined, UserOutlined, ScheduleOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-// import './sidebar.scss'
 
 const SideBar = () => {
     const navigate = useNavigate();
