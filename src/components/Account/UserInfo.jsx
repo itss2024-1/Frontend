@@ -78,7 +78,7 @@ const UserInfo = () => {
                         <Col span={24}>
                             <Upload {...propsUpload}>
                                 <Button icon={<UploadOutlined />}>
-                                    Upload Avatar
+                                Tải lên Avatar
                                 </Button>
                             </Upload>
                         </Col>
@@ -92,7 +92,7 @@ const UserInfo = () => {
                         <Form.Item
                             hidden
                             labelCol={{ span: 24 }}
-                            label="Id"
+                            label="Mã người dùng"
                             name="id"
                             initialValue={user?.id}
                         >

@@ -29,7 +29,7 @@ const LoginPage = () => {
                 navigate('/')
             } else {
                 notification.error({
-                    message: "Have error!!!",
+                    message: "Có lỗi xảy ra!!!",
                     description: res.message,
                     duration: 5
                 })
@@ -43,7 +43,7 @@ const LoginPage = () => {
                 setIsLogin(true);
             } else {
                 notification.error({
-                    message: "Have error!!!",
+                    message: "Có lỗi xảy ra!!!",
                     description: res.message,
                     duration: 5
                 })
@@ -75,7 +75,7 @@ const LoginPage = () => {
                     <Form.Item
                         label="Email"
                         name="username"
-                        rules={[{ required: true, message: 'Please input your email!' }]}
+                        rules={[{ required: true, message: 'Hãy nhập email của bạn!' }]}
                     >
                         <Input />
                     </Form.Item>
@@ -83,7 +83,7 @@ const LoginPage = () => {
                     <Form.Item
                         label="Password"
                         name="password"
-                        rules={[{ required: true, message: 'Please input your password!' }]}
+                        rules={[{ required: true, message: 'Hãy nhập mật khẩu của bạn!' }]}
                     >
                         <Input.Password />
                     </Form.Item>
@@ -93,7 +93,8 @@ const LoginPage = () => {
                         valuePropName="checked"
                         wrapperCol={{ offset: 8, span: 16 }}
                     >
-                        <Checkbox>Remember me</Checkbox>
+      
+      <Checkbox>Remember me</Checkbox>
                     </Form.Item>
 
                     <Form.Item
@@ -127,15 +128,15 @@ const LoginPage = () => {
                     <Form.Item
                         label="Email"
                         name="email"
-                        rules={[{ required: true, message: 'Please input your email!' }]}
+                        rules={[{ required: true, message: 'Hãy nhập email của bạn!' }]}
                     >
                         <Input />
                     </Form.Item>
 
                     <Form.Item
-                        label="Password"
+                        label="Mật khẩu"
                         name="password"
-                        rules={[{ required: true, message: 'Please input your password!' }]}
+                        rules={[{ required: true, message: 'Hãy nhập mật khẩu của bạnbạn!' }]}
                     >
                         <Input.Password />
                     </Form.Item>
@@ -143,14 +144,14 @@ const LoginPage = () => {
                     <Form.Item
                         label="Tên hiển thị"
                         name="name"
-                        rules={[{ required: true, message: 'Name không được để trống!' }]}
+                        rules={[{ required: true, message: 'Tên không được để trống!' }]}
                     >
                         <Input />
                     </Form.Item>
                     <Form.Item
                         label="Số điện	thoại"
                         name="phone"
-                        rules={[{ required: true, message: 'Phone không được để trống!' }]}
+                        rules={[{ required: true, message: 'Không được để trống số điện thoại!' }]}
                     >
                         <Input />
                     </Form.Item>

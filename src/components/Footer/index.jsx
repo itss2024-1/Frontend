@@ -8,8 +8,8 @@ const Footer = () => {
             <div className="footer-content">
                 <h3>About Ghost Team</h3>
                 <p>
-                    This website is dedicated to showcasing the distinguished faculty members of H University.
-                    Explore profiles, achievements, and research contributions.
+                Trang web này được dành để giới thiệu các giảng viên xuất sắc của Đại học H. 
+                Khám phá hồ sơ, thành tựu và các đóng góp nghiên cứu của họ.
                 </p>
                 <ul className="social-icons">
                     <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a></li>

@@ -6,7 +6,7 @@ const NotFound = () => {
         <Result
             status="404"
             title="404"
-            subTitle="Sorry, the page you visited does not exist."
+            subTitle="Xin lỗi, trang bạn truy cập không tồn tạitại."
             extra={<Button type="primary"><Link to="/" >Back Home</Link></Button>}
         />
     )

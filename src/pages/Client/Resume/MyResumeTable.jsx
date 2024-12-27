@@ -82,17 +82,17 @@ const MyResumeTable = () => {
             }
         },
         {
-            title: 'Name',
+            title: 'Tên',
             dataIndex: 'name',
             sorter: true
         },
         {
-            title: 'Status',
+            title: 'Trạng thái',
             dataIndex: 'status',
             sorter: true
         },
         {
-            title: 'Job Title',
+            title: 'Ngành nghề',
             dataIndex: 'jobTitle',
             sorter: true
         },
@@ -110,8 +110,8 @@ const MyResumeTable = () => {
                         />
                         <Popconfirm
                             placement="leftTop"
-                            title={"Xác nhận xóa user"}
-                            description={"Bạn có chắc chắn muốn xóa user này ?"}
+                            title={"Xác nhận xóa hồ sơ"}
+                            description={"Bạn có chắc chắn muốn xóa hồ sơ này ?"}
                             onConfirm={() => handelDeleteResume(record.id)}
                             okText="Xác nhận"
                             cancelText="Hủy"
@@ -166,7 +166,7 @@ const MyResumeTable = () => {
     const handelDeleteResume = async (id) => {
         const res = await callDeleteResume(id);
         if (res && res.data) {
-            message.success('Xóa CV thành công');
+            message.success('Xóa hồ sơ thành công');
             fetchResume();
         } else {
             notification.error({

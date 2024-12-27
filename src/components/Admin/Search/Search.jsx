@@ -23,7 +23,7 @@ const Search = () => {
                         <Form.Item
                             labelCol={{ span: 24 }}
                             name={`fullName`}
-                            label={`Name`}
+                            label={`Tên đầy đủ`}
                         >
                             <Input />
                         </Form.Item>
@@ -51,7 +51,7 @@ const Search = () => {
                 <Row>
                     <Col span={24} style={{ textAlign: 'right' }}>
                         <Button type="primary" htmlType="submit">
-                            Search
+                            Tìm kiếm
                         </Button>
                         <Button
                             style={{ margin: '0 8px' }}
@@ -60,7 +60,7 @@ const Search = () => {
                                 props.setFilter("");
                             }}
                         >
-                            Clear
+                            Xóa
                         </Button>
                         {/* <a
                         style={{ fontSize: 12 }}

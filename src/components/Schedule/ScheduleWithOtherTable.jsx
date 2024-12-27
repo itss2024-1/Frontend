@@ -55,34 +55,39 @@ const ScheduleWithOtherTable = () => {
             ),
         },
         {
-            title: 'Event',
+            title: 'Sự kiện',
             dataIndex: 'name',
             key: 'name',
         },
         {
-            title: 'Status',
+            title: 'Trạng thái',
             dataIndex: 'status',
             key: 'status',
             render: (status) => {
                 let color = 'warning';
+                let label='';
                 switch (status) {
                     case 'PENDING':
                         color = 'warning';
+                        label = 'Đang chờ';
                         break;
                     case 'REJECTED':
                         color = 'red';
+                        label = 'Đã từ chối';
                         break;
                     case 'ACCEPTED':
                         color = 'green';
+                        label ='Đã chấp nhận'
                         break;
                     default:
                         color = 'warning';
+                        label = 'Không xác định';
                 }
-                return <Tag color={color}>{status}</Tag>;
+                return <Tag color={color}>{label}</Tag>;
             }
         },
         {
-            title: 'Time',
+            title: 'Thời gian',
             dataIndex: 'time',
             key: 'time',
         },
@@ -100,8 +105,8 @@ const ScheduleWithOtherTable = () => {
                         />
                         <Popconfirm
                             placement="leftTop"
-                            title={"Xác nhận xóa user"}
-                            description={"Bạn có chắc chắn muốn xóa user này ?"}
+                            title={"Xác nhận xóa sự kiện"}
+                            description={"Bạn có chắc chắn muốn xóa sự kiệnkiện này ?"}
                             onConfirm={() => handelDeleteResume(record.id)}
                             okText="Xác nhận"
                             cancelText="Hủy"
@@ -148,7 +153,7 @@ const ScheduleWithOtherTable = () => {
                     pageSize: pageSize,
                     showSizeChanger: true,
                     total: total,
-                    showTotal: (total, range) => { return (<div> {range[0]}-{range[1]} trên {total} rows</div>); }
+                    showTotal: (total, range) => { return (<div> {range[0]}-{range[1]} trên {total} hàng</div>); }
                 }}
                 loading={isLoading}
             />
