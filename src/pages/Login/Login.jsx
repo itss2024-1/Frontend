@@ -65,7 +65,7 @@ const LoginPage = () => {
                 <h3>Đăng nhập</h3>
                 <Form
                     name="basic"
-                    labelCol={{ span: 6 }}
+                    labelCol={{ span: 8 }}
                     style={{ maxWidth: 600, margin: "0 auto" }}
                     initialValues={{ remember: true }}
                     onFinish={onFinish}
@@ -117,7 +117,7 @@ const LoginPage = () => {
                 <h3>Đăng ký</h3>
                 <Form
                     name="basic"
-                    labelCol={{ span: 6 }}
+                    labelCol={{ span: 8 }}
                     style={{ maxWidth: 600 }}
                     initialValues={{ remember: true }}
                     onFinish={onFinish}
