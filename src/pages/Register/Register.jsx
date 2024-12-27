@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { Form, Input, Button, message } from 'antd';
 
@@ -160,6 +161,29 @@ const RegisterPage = ({ onClose }) => {
                         <Input.Password />
                     </Form.Item>
 
+                    {/* Điều khoản */}
+                    <div
+                        style={{
+                            textAlign: 'center',
+                            marginBottom: '20px',
+                            fontSize: '13px',
+                            color: '#888',
+                        }}
+                    >
+                        Bằng việc đăng ký, bạn đã đồng ý với{' '}
+                        <span
+                            style={{
+                                color: '#FF4D4F',
+                                cursor: 'pointer',
+                                textDecoration: 'underline',
+                            }}
+                            onClick={() => message.info('Điều khoản sử dụng sẽ được mở.')}
+                        >
+                            các điều khoản của chúng tôi
+                        </span>
+                        .
+                    </div>
+
                     <Form.Item
                         wrapperCol={{
                             span: 24,
@@ -182,7 +206,7 @@ const RegisterPage = ({ onClose }) => {
                     </Form.Item>
                 </Form>
             </div>
-        </div>
+        </div >
     );
 };
 

@@ -54,7 +54,7 @@ const LoginPage = () => {
                 height: '100vh',
                 background: `url('backgrounds.jpeg') no-repeat center center`,
                 backgroundSize: 'cover',
-                backgroundAttachment: 'fixed', //  // Đảm bảo hình ảnh phủ đầy toàn bộ phần tử
+                backgroundAttachment: 'fixed',
             }}
         >
             <div
@@ -85,6 +85,7 @@ const LoginPage = () => {
                     onFinishFailed={onFinishFailed}
                     autoComplete="off"
                 >
+                    {/* Email */}
                     <Form.Item
                         label="Email:"
                         name="username"
@@ -98,6 +99,7 @@ const LoginPage = () => {
                         <Input style={{ height: '35px', borderRadius: '5px' }} />
                     </Form.Item>
 
+                    {/* Password */}
                     <Form.Item
                         label="Password:"
                         name="password"
@@ -112,6 +114,7 @@ const LoginPage = () => {
                         <Input.Password style={{ height: '35px', borderRadius: '5px' }} />
                     </Form.Item>
 
+                    {/* Remember Me */}
                     <Form.Item
                         name="remember"
                         valuePropName="checked"
@@ -124,6 +127,7 @@ const LoginPage = () => {
                         <Checkbox>Remember me</Checkbox>
                     </Form.Item>
 
+                    {/* Login Button */}
                     <Form.Item
                         wrapperCol={{
                             span: 24,
@@ -138,30 +142,33 @@ const LoginPage = () => {
                                 width: '150px',
                                 borderRadius: '5px',
                                 marginBottom: '10px',
-                                backgroundColor: '#FF4D4F', // Nút đỏ
-                                borderColor: '#FF4D4F', // Biên đỏ
-                                color: 'white', // Chữ trắng
+                                backgroundColor: '#FF4D4F',
+                                borderColor: '#FF4D4F',
+                                color: 'white',
                             }}
                         >
                             Đăng nhập
                         </Button>
-                        <Button
-                            type="default"
-                            onClick={() => setIsRegistering(true)} // Chuyển sang đăng ký
+                    </Form.Item>
+
+                    {/* Register Link */}
+                    <div style={{ textAlign: 'center', marginTop: '10px' }}>
+                        <span style={{ color: '#888' }}>Bạn chưa có tài khoản? </span>
+                        <span
+                            onClick={() => setIsRegistering(true)}
                             style={{
-                                width: '150px',
-                                borderRadius: '5px',
-                                backgroundColor: '#FF4D4F', // Nút đỏ
-                                borderColor: '#FF4D4F', // Biên đỏ
-                                color: 'white', // Chữ trắng
+                                color: '#FF4D4F',
+                                cursor: 'pointer',
+                                textDecoration: 'underline',
+                                fontWeight: '500',
                             }}
                         >
-                            Đăng ký
-                        </Button>
-                    </Form.Item>
+                            Đăng ký ngay
+                        </span>
+                    </div>
                 </Form>
             </div>
-        </div >
+        </div>
     );
 };
 
