@@ -35,16 +35,16 @@ const UserModalCreate = (props) => {
 
     return (
         <>
-            <Modal title="Basic Modal"
+            <Modal title="Create user"
                 open={openModalCreate}
                 onOk={() => { form.submit() }}
                 onCancel={handleCancel}
-                okText={"Tạo mới"}
-                cancelText={"Hủy"}
+                okText={"Save"}
+                cancelText={"Cancle"}
                 confirmLoading={isSubmit}>
                 <Form
                     form={form}
-                    name="basic"
+                    name="Tạo mới user"
                     style={{ maxWidth: 600 }}
                     onFinish={onFinish}
                     autoComplete="off"
@@ -75,9 +75,9 @@ const UserModalCreate = (props) => {
                     </Form.Item>
                     <Form.Item
                         labelCol={{ span: 24 }}
-                        label="Tuổi"
-                        name="age"
-                        rules={[{ required: true, message: 'Vui lòng nhập tuổi!' }]}
+                        label="Phone"
+                        name="phone"
+                        rules={[{ required: true, message: 'Vui lòng nhập số điện thoại!' }]}
                     >
                         <Input />
                     </Form.Item>

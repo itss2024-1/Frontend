@@ -50,8 +50,8 @@ const UserTable = () => {
             sorter: true
         },
         {
-            title: 'Age',
-            dataIndex: 'age',
+            title: 'Phone',
+            dataIndex: 'phone',
             sorter: true
         },
         {
@@ -89,7 +89,7 @@ const UserTable = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span><h1>Bảng danh sách giáo viên</h1></span>
                 <span style={{ display: 'flex', gap: 15 }}>
-                    <Button
+                    {/* <Button
                         icon={<ExportOutlined />}
                         type="primary"
                         onClick={() => handleExportData()}
@@ -99,7 +99,7 @@ const UserTable = () => {
                         icon={<CloudUploadOutlined />}
                         type="primary"
                         onClick={() => setOpenModalImport(true)}
-                    >Import</Button>
+                    >Import</Button> */}
 
                     <Button
                         icon={<PlusOutlined />}
@@ -107,7 +107,7 @@ const UserTable = () => {
                         onClick={() => {
                             setOpenModalCreate(true);
                         }}
-                    >Thêm mới</Button>
+                    >Create</Button>
                     <Button type='ghost' onClick={() => {
                         setFilter("");
                         setSortQuery("");
@@ -175,7 +175,7 @@ const UserTable = () => {
                 <Col span={24}>
                 </Col>
                 <Col span={24}>
-                    <Search></Search>
+
                     <Table
                         title={renderHeader}
                         columns={columns}
