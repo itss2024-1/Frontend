@@ -1,12 +1,12 @@
 import { FaReact } from "react-icons/fa";
 import { VscSearchFuzzy } from "react-icons/vsc";
-import { Avatar, Divider, Dropdown, message, Space } from "antd";
+import { Avatar, Dropdown, message, Space } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 
-import { callFetchResume, } from "../../services/api";
+import { callFetchResume, callFetchResumeByUsername, } from "../../services/api";
 import ManageAccount from "../Account/ManageAccount";
 import "./header.scss"
 import { doLogoutAction } from "../../redux/slice/accountSlide";
@@ -61,9 +61,9 @@ const Header = () => {
 
     const handleSearch = async (value) => {
         setSearchTerm(value);
-        if (value.length >= 2) {
+        if (value.length >= 1) {
             setIsSearching(true);
-            const res = await callFetchResume(0, 5, `name,desc&name=${value}`);
+            const res = await callFetchResumeByUsername(0, 5, `createdAt,asc`, value);
             if (res?.data?.data?.result) {
                 setSearchResults(res.data.data.result);
             }
@@ -96,7 +96,7 @@ const Header = () => {
                                         setSearchTerm('');
                                     }}
                                 >
-                                    <img src={result.imageUrl} alt={result.name} />
+                                    <img src={`${import.meta.env.VITE_BACKEND_URL}storage/resume/${result.images}`} alt={result.name} />
                                     <div>{result.name}</div>
                                 </div>
                             ))}

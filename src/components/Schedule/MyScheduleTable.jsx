@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Breadcrumb, message, Popconfirm, Table, Tag } from "antd";
+import { Breadcrumb, message, Popconfirm, Rate, Table, Tag } from "antd";
 import { useEffect, useState } from "react";
 
 import { callDeleteSchedule, callFetchSchedule } from "../../services/api";
@@ -12,6 +12,8 @@ const MyScheduleTable = () => {
     const [pageSize, setPageSize] = useState(5);
     const [total, setTotal] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
+
+    const [currentRating, setCurrentRating] = useState(0);
 
     const navigate = useNavigate();
 
@@ -48,6 +50,16 @@ const MyScheduleTable = () => {
             fetchSchedulesInvitee(); // Refresh danh sách sau khi xóa
         } else {
             message.error("Không thể xóa sự kiện");
+        }
+    };
+
+    const handleRating = async (record) => {
+        try {
+            // API call to update rating
+            // await callUpdateRating(record.id, currentRating);
+            message.success('Đánh giá thành công!');
+        } catch (error) {
+            message.error('Đánh giá thất bại!');
         }
     };
 
@@ -117,6 +129,33 @@ const MyScheduleTable = () => {
                         <DeleteTwoTone twoToneColor="#ff4d4f" />
                     </span>
                 </Popconfirm>
+            ),
+        },
+        {
+            title: 'Đánh giá',
+            key: 'rating',
+            render: (text, record) => (
+                record.status === 'ACCEPTED' ? (
+                    <Popconfirm
+                        title="Đánh giá"
+                        description={
+                            <Rate
+                                allowHalf
+                                value={currentRating}
+                                onChange={(value) => setCurrentRating(value)}
+                            />
+                        }
+                        onConfirm={() => handleRating(record)}
+                        okText="Xác nhận"
+                        cancelText="Hủy"
+                    >
+                        <Tag color="blue" style={{ cursor: 'pointer' }}>
+                            Đánh giá
+                        </Tag>
+                    </Popconfirm>
+                ) : (
+                    <Tag color="gray">Chưa chấp nhận</Tag>
+                )
             ),
         }
     ];

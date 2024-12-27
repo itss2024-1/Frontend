@@ -59,13 +59,13 @@ const ScheduleDetail = () => {
                             <Row gutter={[20, 20]}>
                                 <Col md={10} sm={24}>
                                     <div className='thumbnail'>
-                                        <img src={dataSchedule.imageUrl} alt="thumbnail schedule" />
+                                        <img src={`${import.meta.env.VITE_BACKEND_URL}storage/resume/${dataSchedule.imageUrl}`} alt="thumbnail schedule" />
                                     </div>
                                 </Col>
                                 <Col md={14} sm={24}>
                                     <Col span={24}>
-                                        <div className='author'>Người mời: {dataSchedule?.user.name}</div>
                                         <div className='title'>{dataSchedule?.name}</div>
+                                        <div className='author'>Người mời: {dataSchedule?.user.name}</div>
                                         <div className='job-title'>
                                             <span className='left-side'>Trạng thái: </span>
                                             <span className='right-side'>
@@ -73,10 +73,6 @@ const ScheduleDetail = () => {
                                                     {dataSchedule.status}
                                                 </Tag>
                                             </span>
-                                        </div>
-                                        <div className='description'>
-                                            <span className='left-side'>Giới thiệu: </span>
-                                            <span className='right-side'>{dataSchedule.description}</span>
                                         </div>
                                         <div className='phone'>
                                             <span className='left-side'>Số điện thoại: </span>
@@ -86,14 +82,13 @@ const ScheduleDetail = () => {
                                             <span className='left-side'>Thời gian: </span>
                                             <span className='right-side'>{moment(dataSchedule.time).format('YYYY-MM-DD HH:mm')}</span>
                                         </div>
-                                        <div className='created-at'>
-                                            <span className='left-side'>Ngày tạo: </span>
-                                            <span className='right-side'>{moment(dataSchedule.createdAt).format('YYYY-MM-DD HH:mm')}</span>
+                                        <div className='description'>
+                                            <span className='left-side'>Giới thiệu: </span>
+                                            <span className='right-side'>{dataSchedule.description}</span>
                                         </div>
                                     </Col>
                                 </Col>
                             </Row>
-                            {/* Add SchedulePopup component if needed */}
                         </>
                     ) : (
                         <div>Loading...</div>

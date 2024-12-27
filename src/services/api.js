@@ -62,6 +62,9 @@ export const callFetchResume = (page, size, sort) => {
     return axios.get(`/api/v1/resumes/all?page=${page}&size=${size}&sort=${sort}`)
 }
 
+export const callFetchResumeByUsername = (page, size, sort, username)     => {
+    return axios.get(`/api/v1/resumes/all/username?page=${page}&size=${size}&sort=${sort}&userName=${username}`)
+}
 export const callFetchResumeById = (id) => {
     return axios.get(`/api/v1/resumes/${id}`)
 }

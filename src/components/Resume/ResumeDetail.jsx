@@ -1,4 +1,4 @@
-import { Row, Col, Breadcrumb, Tag } from 'antd';
+import { Row, Col, Breadcrumb, Tag, Rate } from 'antd';
 import { HomeOutlined } from '@ant-design/icons';
 import { FaRegHeart } from "react-icons/fa";
 import { Link } from 'react-router-dom';
@@ -52,14 +52,20 @@ const ResumeDetail = (props) => {
                                 </Col>
                                 <Col md={14} sm={24}>
                                     <Col span={24}>
-                                        <div className='author'>Tác giả: <a href='#'>{dataResume?.user.name}</a></div>
                                         <div className='title'>{dataResume?.name}</div>
+                                        <div className='author'>Tác giả: <a href='#'>{dataResume?.user.name}</a></div>
                                         <div className='job-title'>
                                             <span className='left-side'>Chức vụ: </span>
                                             <span className='right-side'>
                                                 <Tag color={dataResume.status === 'PUBLIC' ? 'green' : 'orange'}>
                                                     {dataResume.jobTitle}
                                                 </Tag>
+                                            </span>
+                                        </div>
+                                        <div className='rating'>
+                                            <span className='left-side'>Đánh giá: </span>
+                                            <span className='right-side'>
+                                                <Rate disabled defaultValue={4} />
                                             </span>
                                         </div>
                                         <div className='description'>
@@ -69,10 +75,6 @@ const ResumeDetail = (props) => {
                                         <div className='reward'>
                                             <span className='left-side'>Giải thưởng: </span>
                                             <span className='right-side'>{dataResume.reward}</span>
-                                        </div>
-                                        <div className='created-at'>
-                                            <span className='left-side'>Ngày tạo: </span>
-                                            <span className='right-side'>{new Date(dataResume.createdAt).toLocaleDateString()}</span>
                                         </div>
                                         <div className='actions'>
                                             <button className='cart'>

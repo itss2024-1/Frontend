@@ -74,13 +74,13 @@ const SchedulePopup = (props) => {
     };
 
     const onFinish = async (values) => {
-        console.log('values', dataResume);
         setIsSubmit(true);
         const formattedValues = {
             ...values,
             time: values.time.format(FORMAT_DATE_DISPLAY),
             resumeId: dataResume.id,
-            inviteeId: dataResume.user.id
+            inviteeId: dataResume.user.id,
+            imageUrl: dataResume.images
         };
 
         const res = await callCreateSchedule(formattedValues);

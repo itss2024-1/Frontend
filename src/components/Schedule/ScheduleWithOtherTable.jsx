@@ -32,7 +32,7 @@ const ScheduleWithOtherTable = () => {
 
     useEffect(() => {
         fetchSchedulesInvitee();
-    }, [current, pageSize])
+    }, [current, pageSize, user])
 
     const onChange = async (pagination, filters, sorter, extra) => {
         if (pagination && pagination.current !== current + 1) {

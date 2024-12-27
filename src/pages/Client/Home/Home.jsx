@@ -121,10 +121,6 @@ const Home = () => {
         navigate(`/resumes/${slug}?id=${resume.id}`)
     }
 
-    const onFinish = () => {
-
-    }
-
     return (
         <div className="home">
             <Breadcrumb
@@ -167,8 +163,10 @@ const Home = () => {
                                                         {item.jobTitle}
                                                     </Tag>
                                                 </div>
+                                                <div className="resume-card__rating" style={{ textAlign: "end" }}>
+                                                    Đánh giá: <Rate disabled defaultValue={item.rating || 4} />
+                                                </div>
                                             </div>
-                                            <div> created by: {item.user.name}</div>
                                         </div>
                                     </div>
                                 ))}
