@@ -70,7 +70,11 @@ const ScheduleDetail = () => {
                                             <span className='left-side'>Trạng thái: </span>
                                             <span className='right-side'>
                                                 <Tag color={dataSchedule.status === 'PENDING' ? 'orange' : 'green'}>
-                                                    {dataSchedule.status}
+                                                {dataSchedule.status === 'PENDING' 
+                                                    ? 'Đang chờ' 
+                                                 : dataSchedule.status === 'ACCEPTED' 
+                                                 ? 'Đã chấp nhận' 
+                                                : 'Đã từ chối'}
                                                 </Tag>
                                             </span>
                                         </div>

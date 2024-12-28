@@ -78,7 +78,7 @@ const LayoutAdmin = () => {
                 collapsed={collapsed}
                 onCollapse={(value) => setCollapsed(value)}>
                 <div style={{ height: 32, margin: 16, textAlign: 'center' }}>
-                    Admin
+                    Quản trị viên
                 </div>
                 <Menu
                     defaultSelectedKeys={[activeMenu]}
@@ -99,7 +99,7 @@ const LayoutAdmin = () => {
                     <Dropdown menu={{ items: itemsDropdown }} trigger={['click']}>
                         <a onClick={(e) => e.preventDefault()}>
                             <Space>
-                                Welcome
+                                Chào mừng
                                 <DownOutlined />
                             </Space>
                         </a>

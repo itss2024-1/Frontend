@@ -131,7 +131,7 @@ const Header = () => {
                                         <a onClick={(e) => e.preventDefault()}>
                                             <Avatar src={urlAvatar} />
                                             <Space>
-                                                Welcome {user?.name}
+                                                Chào mừng {user?.name}
                                                 <DownOutlined />
                                             </Space>
                                         </a>

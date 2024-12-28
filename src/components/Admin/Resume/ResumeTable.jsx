@@ -25,17 +25,17 @@ const ResumeTable = () => {
             }
         },
         {
-            title: 'Name',
+            title: 'Tên',
             dataIndex: 'name',
             sorter: true
         },
         {
-            title: 'Status',
+            title: 'Trạng thái',
             dataIndex: 'status',
             sorter: true
         },
         {
-            title: 'Job Title',
+            title: 'Chức danh công việc',
             dataIndex: 'jobTitle',
             sorter: true
         },
@@ -91,13 +91,13 @@ const ResumeTable = () => {
                         icon={<ExportOutlined />}
                         type="primary"
                         onClick={() => handleExportData()}
-                    >Export</Button>
+                    >Xuất dữ liệu</Button>
 
                     <Button
                         icon={<CloudUploadOutlined />}
                         type="primary"
                         onClick={() => setOpenModalImport(true)}
-                    >Import</Button>
+                    >Nhập dữ liệu</Button>
 
                     <Button
                         icon={<PlusOutlined />}
@@ -149,7 +149,7 @@ const ResumeTable = () => {
                             pageSize: pageSize,
                             showSizeChanger: true,
                             total: total,
-                            showTotal: (total, range) => { return (<div> {range[0]}-{range[1]} trên {total} rows</div>); }
+                            showTotal: (total, range) => { return (<div> {range[0]}-{range[1]} trên {total} hàng</div>); }
                         }}
                         loading={isLoading}
                     />

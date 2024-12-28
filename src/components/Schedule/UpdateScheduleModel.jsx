@@ -19,7 +19,7 @@ const UpdateSceduleModel = (props) => {
             setIsSubmit(true);
             const res = await callUpdateSchedule(values);
             if (res && res?.data) {
-                message.success('Cập nhật user thành công');
+                message.success('Cập nhật cuộc hẹn thành công');
                 form.resetFields();
                 setOpenModelUpdate(false);
             }
@@ -41,7 +41,7 @@ const UpdateSceduleModel = (props) => {
     }, [dataUpdate]);
 
     return (
-        <Modal title="Basic Modal"
+        <Modal title="Cập nhật cuộc hẹn"
             open={openModelUpdate}
             onOk={() => { form.submit() }}
             onCancel={handleCancel}
@@ -70,9 +70,9 @@ const UpdateSceduleModel = (props) => {
                     rules={[{ required: true, message: 'Vui lòng chọn trạng thái!' }]}
                 >
                     <Select>
-                        <Select.Option value="PENDING">PENDING</Select.Option>
-                        <Select.Option value="ACCEPTED">ACCEPTED</Select.Option>
-                        <Select.Option value="REJECTED">REJECTED</Select.Option>
+                        <Select.Option value="PENDING">Đang chờ</Select.Option>
+                        <Select.Option value="ACCEPTED">Đã chấp nhận</Select.Option>
+                        <Select.Option value="REJECTED">Đã từ chối</Select.Option>
                     </Select>
                 </Form.Item>
                 <Form.Item

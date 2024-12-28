@@ -29,7 +29,7 @@ const LoginPage = () => {
                 navigate('/')
             } else {
                 notification.error({
-                    message: "Have error!!!",
+                    message: "Có lỗi xảy ra!!!",
                     description: res.message,
                     duration: 5
                 })
@@ -43,7 +43,7 @@ const LoginPage = () => {
                 setIsLogin(true);
             } else {
                 notification.error({
-                    message: "Have error!!!",
+                    message: "Có lỗi xảy ra!!!",
                     description: res.message,
                     duration: 5
                 })
@@ -86,12 +86,7 @@ const LoginPage = () => {
                     <Form.Item
                         label="Email:"
                         name="username"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input your email!',
-                            },
-                        ]}
+                        rules={[{ required: true, message: 'Hãy nhập email của bạn!' }]}
                     >
                         <Input style={{ height: '35px', borderRadius: '5px' }} />
                     </Form.Item>
@@ -99,13 +94,7 @@ const LoginPage = () => {
                     <Form.Item
                         label="Password:"
                         name="password"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input your password!',
-                            },
-                        ]}
-                        style={{ marginBottom: '20px' }}
+                        rules={[{ required: true, message: 'Hãy nhập mật khẩu của bạn!' }]}
                     >
                         <Input.Password style={{ height: '35px', borderRadius: '5px' }} />
                     </Form.Item>
@@ -119,6 +108,7 @@ const LoginPage = () => {
                         }}
                         style={{ marginBottom: '20px' }}
                     >
+
                         <Checkbox>Remember me</Checkbox>
                     </Form.Item>
                     {/* Login Button */}
@@ -199,6 +189,7 @@ const LoginPage = () => {
                     >
                         <Input />
                     </Form.Item>
+
                     <Form.Item
                         label="Email:"
                         name="email"

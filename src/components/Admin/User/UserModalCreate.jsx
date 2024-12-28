@@ -18,7 +18,7 @@ const UserModalCreate = (props) => {
         setIsSubmit(true)
         const res = await callCreateUser(values);
         if (res && res.data) {
-            message.success('Tạo mới user thành công');
+            message.success('Tạo mới người dùng thành công');
             form.resetFields();
             setOpenModalCreate(false);
             await props.fetchUser()
@@ -35,7 +35,7 @@ const UserModalCreate = (props) => {
 
     return (
         <>
-            <Modal title="Basic Modal"
+            <Modal title="Tạo mới người dùng"
                 open={openModalCreate}
                 onOk={() => { form.submit() }}
                 onCancel={handleCancel}

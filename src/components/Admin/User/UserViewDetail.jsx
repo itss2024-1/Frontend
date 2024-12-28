@@ -14,20 +14,20 @@ const UserViewDetail = (props) => {
 
     return (
         <>
-            <Drawer title="Basic Drawer" onClose={onClose} open={openViewDetail} width={"50vw"}>
+            <Drawer title="Chi tiết người dùng" onClose={onClose} open={openViewDetail} width={"50vw"}>
                 <Descriptions
-                    title="Thông tin user"
+                    title="Thông tin người dùng"
                     bordered
                     column={2}
                 >
-                    <Descriptions.Item label="Id"><a>{dataViewDetail?.id}</a></Descriptions.Item>
+                    <Descriptions.Item label="Mã số"><a>{dataViewDetail?.id}</a></Descriptions.Item>
                     <Descriptions.Item label="Tên hiển thị">{dataViewDetail?.name}</Descriptions.Item>
                     <Descriptions.Item label="Email">{dataViewDetail?.email}</Descriptions.Item>
                     <Descriptions.Item label="Số điện thoại">{dataViewDetail?.phone}</Descriptions.Item>
-                    <Descriptions.Item label="Created At">
+                    <Descriptions.Item label="Ngày tạo">
                         {moment(dataViewDetail?.createdAt).format(FORMAT_DATE_DISPLAY)}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Updated At">
+                    <Descriptions.Item label="Ngày cập nhật">
                         {moment(dataViewDetail?.updatedAt).format(FORMAT_DATE_DISPLAY)}
                     </Descriptions.Item>
                 </Descriptions>

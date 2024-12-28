@@ -28,7 +28,7 @@ const UserTable = () => {
 
     const columns = [
         {
-            title: 'Id',
+            title: 'Mã số',
             dataIndex: 'id',
             render: (text, record, index) => {
                 return (
@@ -40,7 +40,7 @@ const UserTable = () => {
             }
         },
         {
-            title: 'Name',
+            title: 'Tên',
             dataIndex: 'name',
             sorter: true
         },
@@ -50,7 +50,7 @@ const UserTable = () => {
             sorter: true
         },
         {
-            title: 'Age',
+            title: 'Tuổi',
             dataIndex: 'age',
             sorter: true
         },
@@ -93,13 +93,13 @@ const UserTable = () => {
                         icon={<ExportOutlined />}
                         type="primary"
                         onClick={() => handleExportData()}
-                    >Export</Button>
+                    >Xuất dữ liệu</Button>
 
                     <Button
                         icon={<CloudUploadOutlined />}
                         type="primary"
                         onClick={() => setOpenModalImport(true)}
-                    >Import</Button>
+                    >Nhập dữ liệu</Button>
 
                     <Button
                         icon={<PlusOutlined />}
@@ -187,7 +187,7 @@ const UserTable = () => {
                             pageSize: pageSize,
                             showSizeChanger: true,
                             total: total,
-                            showTotal: (total, range) => { return (<div> {range[0]}-{range[1]} trên {total} rows</div>); }
+                            showTotal: (total, range) => { return (<div> {range[0]}-{range[1]} trên {total} hàng</div>); }
                         }}
                         loading={isLoading}
                     />
