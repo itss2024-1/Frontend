@@ -119,10 +119,6 @@ const LayoutAdmin = () => {
                         <Outlet />
                     </div>
                 </Content>
-
-                <Footer style={{ padding: 0, textAlign: 'center' }}>
-                    Ghost <HeartTwoTone />
-                </Footer>
             </Layout>
         </Layout>
     );

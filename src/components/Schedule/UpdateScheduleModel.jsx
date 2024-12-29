@@ -45,7 +45,7 @@ const UpdateSceduleModel = (props) => {
             open={openModelUpdate}
             onOk={() => { form.submit() }}
             onCancel={handleCancel}
-            okText={"Tạo mới"}
+            okText={"Lưu"}
             cancelText={"Hủy"}
             confirmLoading={isSubmit}>
             <Form

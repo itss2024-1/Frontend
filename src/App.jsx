@@ -4,7 +4,6 @@ import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import RegisterPage from './pages/Register/Register'
 import NotFound from './pages/Errors/NotFound'
-import Footer from './components/Footer'
 import Header from './components/Header'
 import LayoutAdmin from './components/Admin/LayoutAdmin'
 import AdminPage from './pages/Admin/AdminPage'
@@ -31,10 +30,8 @@ const Layout = () => {
         <SideBar />
         <div className="content">
           <Outlet />
-          {/* content */}
         </div>
       </div>
-      <Footer />
     </div>
   )
 }
