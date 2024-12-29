@@ -110,3 +110,9 @@ export const callFetchScheduleById = (id) => {
     return axios.get(`/api/v1/schedules/${id}`)
 }
 
+// email
+
+export const callSendEmail = (data) => {
+    return axios.post(`/api/v1/email/schedule`, data)
+}
+

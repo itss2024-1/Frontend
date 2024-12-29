@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import moment from "moment";
 
 import { FORMAT_DATE_DISPLAY } from "../../utils/constant";
-import { callCreateSchedule } from "../../services/api";
+import { callCreateSchedule, callSendEmail } from "../../services/api";
 
 const SchedulePopup = (props) => {
     const { isModalOpen, setIsModalOpen, image, dataResume } = props;
@@ -74,7 +74,6 @@ const SchedulePopup = (props) => {
     };
 
     const onFinish = async (values) => {
-        setIsSubmit(true);
         const formattedValues = {
             ...values,
             time: values.time.format(FORMAT_DATE_DISPLAY),
@@ -83,8 +82,18 @@ const SchedulePopup = (props) => {
             imageUrl: dataResume.images
         };
 
+        const emailValues = {
+            email: values.email,
+            name: values.name,
+            description: values.description,
+            time: values.time.format(FORMAT_DATE_DISPLAY),
+            phone: values.phone,
+            // status: 'PENDING',
+        }
+
         const res = await callCreateSchedule(formattedValues);
         if (res && res?.data) {
+            // const sendMail = await callSendEmail(emailValues);
             message.success('Đăng ký lịch thành công!');
         } else {
             notification.error({
@@ -93,7 +102,6 @@ const SchedulePopup = (props) => {
             });
         }
 
-        setIsSubmit(false);
         form.resetFields();
         setIsModalOpen(false);
 
