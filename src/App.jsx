@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react'
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import RegisterPage from './pages/Register/Register'
+import { useDispatch } from 'react-redux'
+
 import NotFound from './pages/Errors/NotFound'
 import Footer from './components/Footer'
 import Header from './components/Header'
@@ -90,10 +89,7 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
-  }, {
-    path: "/register",
-    element: <RegisterPage />
-  }
+  },
 ])
 
 const App = () => {

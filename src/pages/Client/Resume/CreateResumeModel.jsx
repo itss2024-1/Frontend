@@ -77,7 +77,7 @@ const CreateResumeModel = (props) => {
     return (
         <>
             <Modal
-                title="Tạo mới CV"
+                title="Basic Modal"
                 open={openModalCreate}
                 onOk={() => { form.submit() }}
                 onCancel={handleCancel}
@@ -99,7 +99,7 @@ const CreateResumeModel = (props) => {
                                 <Col span={24}>
                                     <Upload {...propsUpload}>
                                         <Button icon={<UploadOutlined />} size="large">
-                                            Tải lên ảnh đại diện
+                                            Upload Avatar
                                         </Button>
                                     </Upload>
                                 </Col>
@@ -141,8 +141,8 @@ const CreateResumeModel = (props) => {
                                     rules={[{ required: true, message: 'Vui lòng chọn trạng thái!' }]}
                                 >
                                     <Select placeholder="Chọn trạng thái">
-                                        <Select.Option value="PUBLIC">Công khai</Select.Option>
-                                        <Select.Option value="PRIVATE">Riêng tư</Select.Option>
+                                        <Select.Option value="PUBLIC">PUBLIC</Select.Option>
+                                        <Select.Option value="PRIVATE">PRIVATE</Select.Option>
                                     </Select>
                                 </Form.Item>
                                 <Form.Item

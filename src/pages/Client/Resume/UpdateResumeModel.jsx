@@ -64,7 +64,7 @@ const UpdateResumeModel = (props) => {
         setIsSubmit(true);
         const res = await callUpdateResume(values);
         if (res && res.data) {
-            message.success('Cập nhật hồ sơ thành công');
+            message.success('Cập nhật CV thành công');
             form.resetFields();
             setOpenModalUpdate(false);
             await props.fetchResume();
@@ -156,8 +156,8 @@ const UpdateResumeModel = (props) => {
                                 rules={[{ required: true, message: 'Vui lòng chọn trạng thái!' }]}
                             >
                                 <Select placeholder="Chọn trạng thái">
-                                    <Select.Option value="PUBLIC">Công khai</Select.Option>
-                                    <Select.Option value="PRIVATE">Riêng tư</Select.Option>
+                                    <Select.Option value="PUBLIC">PUBLIC</Select.Option>
+                                    <Select.Option value="PRIVATE">PRIVATE</Select.Option>
                                 </Select>
                             </Form.Item>
                             <Form.Item

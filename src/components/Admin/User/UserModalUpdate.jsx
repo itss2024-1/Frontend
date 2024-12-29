@@ -42,11 +42,11 @@ const UserModalUpdate = (props) => {
 
     return (
         <>
-            <Modal title="Cập nhật người dùng"
+            <Modal title="Basic Modal"
                 open={openModalUpdate}
                 onOk={() => { form.submit() }}
                 onCancel={handleCancel}
-                okText={"Cập nhật"}
+                okText={"Tạo mới"}
                 cancelText={"Hủy"}
                 confirmLoading={isSubmit}>
                 <Form
@@ -66,7 +66,7 @@ const UserModalUpdate = (props) => {
                     </Form.Item>
                     <Form.Item
                         labelCol={{ span: 24 }}
-                        label="Tên hiển thị"
+                        label="Tên hiên thị"
                         name="name"
                         rules={[{ required: true, message: 'Vui lòng nhập tên!' }]}
                     >
@@ -76,7 +76,7 @@ const UserModalUpdate = (props) => {
                         labelCol={{ span: 24 }}
                         label="Tuổi"
                         name="age"
-                        rules={[{ required: true, message: 'Vui lòng nhập tuổi!' }]}
+                        rules={[{ required: true, message: 'Vui lòng nhập số điện thoại!' }]}
                     >
                         <Input />
                     </Form.Item>

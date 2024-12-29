@@ -44,7 +44,7 @@ const AdminPage = () => {
                 </Col>
                 <Col span={12}>
                     <Card bordered={false}>
-                        <Statistic title="Tổng số hồ sơ" value={countResume} precision={2} formatter={formatter} />
+                        <Statistic title="Tổng CV" value={countResume} precision={2} formatter={formatter} />
                     </Card>
                 </Col>
             </Row>
