@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Breadcrumb, message, Popconfirm, Table, Tag } from "antd";
+import { Breadcrumb, Popconfirm, Table, Tag } from "antd";
 import { DeleteTwoTone, EditTwoTone, HomeOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 
-import { callDeleteSchedule, callFetchScheduleByInviteeId } from "../../services/api";
+import { callFetchScheduleByInviteeId } from "../../services/api";
 import UpdateSceduleModel from "./UpdateScheduleModel";
 
 
@@ -29,16 +29,6 @@ const ScheduleWithOtherTable = () => {
         }
         setIsLoading(false);
     }
-
-    const handleDeleteSchedule = async (id) => {
-        const res = await callDeleteSchedule(id);
-        if (res.status === 204) {
-            message.success("Xóa sự kiện thành công");
-            fetchSchedulesInvitee(); // Refresh danh sách sau khi xóa
-        } else {
-            message.error("Không thể xóa sự kiện");
-        }
-    };
 
     useEffect(() => {
         fetchSchedulesInvitee();
@@ -65,39 +55,34 @@ const ScheduleWithOtherTable = () => {
             ),
         },
         {
-            title: 'Sự kiện',
+            title: 'Event',
             dataIndex: 'name',
             key: 'name',
         },
         {
-            title: 'Trạng thái',
+            title: 'Status',
             dataIndex: 'status',
             key: 'status',
             render: (status) => {
                 let color = 'warning';
-                let label = '';
                 switch (status) {
                     case 'PENDING':
                         color = 'warning';
-                        label = 'Đang chờ';
                         break;
                     case 'REJECTED':
                         color = 'red';
-                        label = 'Đã từ chối';
                         break;
                     case 'ACCEPTED':
                         color = 'green';
-                        label = 'Đã chấp nhận'
                         break;
                     default:
                         color = 'warning';
-                        label = 'Không xác định';
                 }
-                return <Tag color={color}>{label}</Tag>;
+                return <Tag color={color}>{status}</Tag>;
             }
         },
         {
-            title: 'Thời gian',
+            title: 'Time',
             dataIndex: 'time',
             key: 'time',
         },
@@ -115,9 +100,9 @@ const ScheduleWithOtherTable = () => {
                         />
                         <Popconfirm
                             placement="leftTop"
-                            title={"Xác nhận xóa sự kiện"}
-                            description={"Bạn có chắc chắn muốn xóa sự kiệnkiện này ?"}
-                            onConfirm={() => handleDeleteSchedule(record.id)}
+                            title={"Xác nhận xóa user"}
+                            description={"Bạn có chắc chắn muốn xóa user này ?"}
+                            onConfirm={() => handelDeleteResume(record.id)}
                             okText="Xác nhận"
                             cancelText="Hủy"
                         >
@@ -163,7 +148,7 @@ const ScheduleWithOtherTable = () => {
                     pageSize: pageSize,
                     showSizeChanger: true,
                     total: total,
-                    showTotal: (total, range) => { return (<div> {range[0]}-{range[1]} trên {total} hàng</div>); }
+                    showTotal: (total, range) => { return (<div> {range[0]}-{range[1]} trên {total} rows</div>); }
                 }}
                 loading={isLoading}
             />

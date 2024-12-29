@@ -10,7 +10,6 @@ import {
 } from '@ant-design/icons';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { Layout, Menu, Dropdown, Space } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
 
 import './layout.scss'
 
@@ -20,20 +19,6 @@ const LayoutAdmin = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [activeMenu, setActiveMenu] = useState('dashboard');
     const location = useLocation();
-    const dispatch = useDispatch();
-
-    const user = useSelector(state => state.account.user);
-
-    const handleLogout = async () => {
-        try {
-            localStorage.removeItem('access_token');
-            dispatch(doLogoutAction());
-            navigate('/');
-            message.success('Đăng xuất thành công');
-        } catch (error) {
-            message.error('Có lỗi xảy ra khi đăng xuất');
-        }
-    };
 
     const items = [
         {
@@ -55,6 +40,12 @@ const LayoutAdmin = () => {
     ];
 
     const itemsDropdown = [
+        {
+            label: <label
+                style={{ cursor: 'pointer' }}
+            >Quản lý tài khoản</label>,
+            key: 'account',
+        },
         {
             label: <Link to={'/'}>Trang chủ</Link>,
             key: 'home',
@@ -86,8 +77,8 @@ const LayoutAdmin = () => {
                 collapsible
                 collapsed={collapsed}
                 onCollapse={(value) => setCollapsed(value)}>
-                <div style={{ height: 32, margin: 16, textAlign: 'center' }}>
-                    Quản trị viên
+                <div style={{ height: '32px', margin: '16px', textAlign: 'center', fontSize: '22px', fontWeight: 'bold', color: '#1677ff' }}>
+                    Admin
                 </div>
                 <Menu
                     defaultSelectedKeys={[activeMenu]}
@@ -108,7 +99,7 @@ const LayoutAdmin = () => {
                     <Dropdown menu={{ items: itemsDropdown }} trigger={['click']}>
                         <a onClick={(e) => e.preventDefault()}>
                             <Space>
-                                {user?.name}
+                                <span style={{color: '#ffffff'}}>Welcome</span>
                                 <DownOutlined />
                             </Space>
                         </a>

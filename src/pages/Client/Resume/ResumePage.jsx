@@ -24,7 +24,7 @@ const ResumePage = () => {
 
     return (
         <div>
-            <h1>Chi tiết hồ sơ</h1>
+            <h1>Resume Detail Page</h1>
             <ResumeDetail dataResume={dataResume} />
         </div>
     );

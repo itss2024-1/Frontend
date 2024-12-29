@@ -12,7 +12,7 @@
         }
     }
 
-    .author, .title, .job-title, .description, .phone, .time, .author {
+    .author, .title, .job-title, .description, .phone, .time, .created-at {
         margin-bottom: 16px;
     }
 
@@ -34,7 +34,7 @@
         font-size: 18px;
     }
 
-    .description, .phone, .time, .author {
+    .description, .phone, .time, .created-at {
         display: flex;
         align-items: flex-start;
 
