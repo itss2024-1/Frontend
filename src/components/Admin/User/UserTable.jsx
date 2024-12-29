@@ -1,4 +1,4 @@
-import { CloudUploadOutlined, DeleteTwoTone, EditTwoTone, ExportOutlined, PlusOutlined, ReloadOutlined } from "@ant-design/icons";
+import { DeleteTwoTone, EditTwoTone, PlusOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Col, message, notification, Popconfirm, Row, Table } from "antd";
 import { useEffect, useState } from "react";
 
@@ -6,7 +6,6 @@ import { callDeleteUser, callFetchUser } from "../../../services/api";
 import UserViewDetail from "./UserViewDetail";
 import UserModalUpdate from "./UserModalUpdate";
 import UserModalCreate from "./UserModalCreate";
-import Search from "../Search/Search";
 
 const UserTable = () => {
     const [data, setData] = useState([]);
@@ -50,38 +49,38 @@ const UserTable = () => {
             sorter: true
         },
         {
-            title: 'Tuổi',
-            dataIndex: 'age',
+            title: 'Phone',
+            dataIndex: 'phone',
             sorter: true
         },
-        {
-            title: 'Action',
-            render: (text, record, index) => {
-                return (
-                    <>
-                        <EditTwoTone
-                            twoToneColor="#f57800" style={{ cursor: "pointer" }}
-                            onClick={() => {
-                                setOpenModalUpdate(true);
-                                setDataUserUpdate(record);
-                            }}
-                        />
-                        <Popconfirm
-                            placement="leftTop"
-                            title={"Xác nhận xóa user"}
-                            description={"Bạn có chắc chắn muốn xóa user này ?"}
-                            onConfirm={() => callDeleteUser(record.id)}
-                            okText="Xác nhận"
-                            cancelText="Hủy"
-                        >
-                            <span style={{ cursor: "pointer", margin: "0 20px" }}>
-                                <DeleteTwoTone twoToneColor="#ff4d4f" />
-                            </span>
-                        </Popconfirm>
-                    </>
-                );
-            }
-        }
+        // {
+        //     title: 'Action',
+        //     render: (text, record, index) => {
+        //         return (
+        //             <>
+        //                 <EditTwoTone
+        //                     twoToneColor="#f57800" style={{ cursor: "pointer" }}
+        //                     onClick={() => {
+        //                         setOpenModalUpdate(true);
+        //                         setDataUserUpdate(record);
+        //                     }}
+        //                 />
+        //                 <Popconfirm
+        //                     placement="leftTop"
+        //                     title={"Xác nhận xóa user"}
+        //                     description={"Bạn có chắc chắn muốn xóa user này ?"}
+        //                     onConfirm={() => callDeleteUser(record.id)}
+        //                     okText="Xác nhận"
+        //                     cancelText="Hủy"
+        //                 >
+        //                     <span style={{ cursor: "pointer", margin: "0 20px" }}>
+        //                         <DeleteTwoTone twoToneColor="#ff4d4f" />
+        //                     </span>
+        //                 </Popconfirm>
+        //             </>
+        //         );
+        //     }
+        // }
     ];
 
     const renderHeader = () => {
@@ -89,19 +88,7 @@ const UserTable = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span><h1>Bảng danh sách giáo viên</h1></span>
                 <span style={{ display: 'flex', gap: 15 }}>
-                    <Button
-                        icon={<ExportOutlined />}
-                        type="primary"
-                        onClick={() => handleExportData()}
-                    >Xuất dữ liệu</Button>
-
-                    <Button
-                        icon={<CloudUploadOutlined />}
-                        type="primary"
-                        onClick={() => setOpenModalImport(true)}
-                    >Nhập dữ liệu</Button>
-
-                    <Button
+                    {/* <Button
                         icon={<PlusOutlined />}
                         type="primary"
                         onClick={() => {
@@ -113,7 +100,7 @@ const UserTable = () => {
                         setSortQuery("");
                     }}>
                         <ReloadOutlined />
-                    </Button>
+                    </Button> */}
                 </span>
             </div>
         );
@@ -146,15 +133,6 @@ const UserTable = () => {
         fetchUser();
     }, [current, pageSize, filter, sortQuery]);
 
-    const handleExportData = () => {
-        if (data.length > 0) {
-            const worksheet = XLSX.utils.json_to_sheet(data);
-            const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-            XLSX.writeFile(workbook, "DataSheet.xlsx");
-        }
-    };
-
     const handleDeleteUser = async (_id) => {
         console.log("delete user", _id);
         const res = await callDeleteUser(_id);
@@ -175,7 +153,6 @@ const UserTable = () => {
                 <Col span={24}>
                 </Col>
                 <Col span={24}>
-                    <Search></Search>
                     <Table
                         title={renderHeader}
                         columns={columns}
@@ -198,13 +175,13 @@ const UserTable = () => {
                 setOpenViewDetail={setOpenViewDetail}
                 dataViewDetail={dataViewDetail}
             />
-            <UserModalUpdate
+            {/* <UserModalUpdate
                 openModalUpdate={openModalUpdate}
                 setOpenModalUpdate={setOpenModalUpdate}
                 setDataUserUpdate={setDataUserUpdate}
                 dataUserUpdate={dataUserUpdate}
                 fetchUser={fetchUser}
-            />
+            /> */}
             <UserModalCreate
                 openModalCreate={openModalCreate}
                 setOpenModalCreate={setOpenModalCreate}

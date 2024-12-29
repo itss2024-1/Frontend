@@ -2,7 +2,7 @@ import { CloudUploadOutlined, DeleteTwoTone, EditTwoTone, ExportOutlined, PlusOu
 import { Button, Col, message, notification, Popconfirm, Row, Table } from "antd";
 import { useEffect, useState } from "react";
 import { callFetchResume } from "../../../services/api";
-import Search from "../Search/Search";
+import ResumeViewDetail from "./ResumeViewDetail";
 
 const ResumeTable = () => {
     const [data, setData] = useState([]);
@@ -11,11 +11,15 @@ const ResumeTable = () => {
     const [total, setTotal] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
 
+    const [openViewDetail, setOpenViewDetail] = useState(false);
+    const [dataViewDetail, setDataViewDetail] = useState(null);
+
     const columns = [
         {
             title: 'Id',
             dataIndex: 'id',
             render: (text, record, index) => {
+                console.log(record);
                 return (
                     <a href='#' onClick={() => {
                         setOpenViewDetail(true);
@@ -40,33 +44,38 @@ const ResumeTable = () => {
             sorter: true
         },
         {
-            title: 'Action',
-            render: (text, record, index) => {
-                return (
-                    <>
-                        <EditTwoTone
-                            twoToneColor="#f57800" style={{ cursor: "pointer" }}
-                            onClick={() => {
-                                setOpenModalUpdate(true);
-                                setDataUserUpdate(record);
-                            }}
-                        />
-                        <Popconfirm
-                            placement="leftTop"
-                            title={"Xác nhận xóa user"}
-                            description={"Bạn có chắc chắn muốn xóa user này ?"}
-                            onConfirm={() => callDeleteUser(record.id)}
-                            okText="Xác nhận"
-                            cancelText="Hủy"
-                        >
-                            <span style={{ cursor: "pointer", margin: "0 20px" }}>
-                                <DeleteTwoTone twoToneColor="#ff4d4f" />
-                            </span>
-                        </Popconfirm>
-                    </>
-                );
-            }
-        }
+            title: 'Người tạo',
+            dataIndex: ['user', 'name'],
+            sorter: true
+        },
+        // {
+        //     title: 'Action',
+        //     render: (text, record, index) => {
+        //         return (
+        //             <>
+        //                 <EditTwoTone
+        //                     twoToneColor="#f57800" style={{ cursor: "pointer" }}
+        //                     onClick={() => {
+        //                         setOpenModalUpdate(true);
+        //                         setDataUserUpdate(record);
+        //                     }}
+        //                 />
+        //                 <Popconfirm
+        //                     placement="leftTop"
+        //                     title={"Xác nhận xóa user"}
+        //                     description={"Bạn có chắc chắn muốn xóa user này ?"}
+        //                     onConfirm={() => callDeleteUser(record.id)}
+        //                     okText="Xác nhận"
+        //                     cancelText="Hủy"
+        //                 >
+        //                     <span style={{ cursor: "pointer", margin: "0 20px" }}>
+        //                         <DeleteTwoTone twoToneColor="#ff4d4f" />
+        //                     </span>
+        //                 </Popconfirm>
+        //             </>
+        //         );
+        //     }
+        // }
     ];
 
     const fetchResume = async () => {
@@ -87,19 +96,7 @@ const ResumeTable = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span><h1>Bảng danh sách CV</h1></span>
                 <span style={{ display: 'flex', gap: 15 }}>
-                    <Button
-                        icon={<ExportOutlined />}
-                        type="primary"
-                        onClick={() => handleExportData()}
-                    >Xuất dữ liệu</Button>
-
-                    <Button
-                        icon={<CloudUploadOutlined />}
-                        type="primary"
-                        onClick={() => setOpenModalImport(true)}
-                    >Nhập dữ liệu</Button>
-
-                    <Button
+                    {/* <Button
                         icon={<PlusOutlined />}
                         type="primary"
                         onClick={() => {
@@ -111,7 +108,7 @@ const ResumeTable = () => {
                         setSortQuery("");
                     }}>
                         <ReloadOutlined />
-                    </Button>
+                    </Button> */}
                 </span>
             </div>
         );
@@ -137,7 +134,6 @@ const ResumeTable = () => {
                 <Col span={24}>
                 </Col>
                 <Col span={24}>
-                    <Search></Search>
                     <Table
                         title={renderHeader}
                         columns={columns}
@@ -155,6 +151,12 @@ const ResumeTable = () => {
                     />
                 </Col>
             </Row>
+
+            <ResumeViewDetail
+                openViewDetail={openViewDetail}
+                setOpenViewDetail={setOpenViewDetail}
+                dataViewDetail={dataViewDetail}
+            ></ResumeViewDetail>
         </>
     );
 }

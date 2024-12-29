@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Breadcrumb, Popconfirm, Table, Tag } from "antd";
+import { Breadcrumb, message, Popconfirm, Table, Tag } from "antd";
 import { DeleteTwoTone, EditTwoTone, HomeOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 
-import { callFetchScheduleByInviteeId } from "../../services/api";
+import { callDeleteSchedule, callFetchScheduleByInviteeId } from "../../services/api";
 import UpdateSceduleModel from "./UpdateScheduleModel";
 
 
@@ -29,6 +29,16 @@ const ScheduleWithOtherTable = () => {
         }
         setIsLoading(false);
     }
+
+    const handleDeleteSchedule = async (id) => {
+        const res = await callDeleteSchedule(id);
+        if (res.status === 204) {
+            message.success("Xóa sự kiện thành công");
+            fetchSchedulesInvitee(); // Refresh danh sách sau khi xóa
+        } else {
+            message.error("Không thể xóa sự kiện");
+        }
+    };
 
     useEffect(() => {
         fetchSchedulesInvitee();
@@ -65,7 +75,7 @@ const ScheduleWithOtherTable = () => {
             key: 'status',
             render: (status) => {
                 let color = 'warning';
-                let label='';
+                let label = '';
                 switch (status) {
                     case 'PENDING':
                         color = 'warning';
@@ -77,7 +87,7 @@ const ScheduleWithOtherTable = () => {
                         break;
                     case 'ACCEPTED':
                         color = 'green';
-                        label ='Đã chấp nhận'
+                        label = 'Đã chấp nhận'
                         break;
                     default:
                         color = 'warning';
@@ -107,7 +117,7 @@ const ScheduleWithOtherTable = () => {
                             placement="leftTop"
                             title={"Xác nhận xóa sự kiện"}
                             description={"Bạn có chắc chắn muốn xóa sự kiệnkiện này ?"}
-                            onConfirm={() => handelDeleteResume(record.id)}
+                            onConfirm={() => handleDeleteSchedule(record.id)}
                             okText="Xác nhận"
                             cancelText="Hủy"
                         >

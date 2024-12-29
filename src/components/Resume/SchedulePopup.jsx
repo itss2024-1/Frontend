@@ -175,7 +175,7 @@ const SchedulePopup = (props) => {
                                 <Row justify="end">
                                     <Col>
                                         <Button type="primary" loading={isSubmit} onClick={() => form.submit()}>
-                                            Cập nhật
+                                            Đặt lịch
                                         </Button>
                                     </Col>
                                 </Row>

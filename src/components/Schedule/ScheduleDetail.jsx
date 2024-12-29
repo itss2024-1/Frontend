@@ -65,16 +65,20 @@ const ScheduleDetail = () => {
                                 <Col md={14} sm={24}>
                                     <Col span={24}>
                                         <div className='title'>{dataSchedule?.name}</div>
-                                        <div className='author'>Người mời: {dataSchedule?.user.name}</div>
+                                        {/* <div className='author'>Người mời: {dataSchedule?.user.name}</div> */}
+                                        <div className='author'>
+                                            <span className='left-side'>Người mời : </span>
+                                            <span className='right-side'>{dataSchedule?.user.name}</span>
+                                        </div>
                                         <div className='job-title'>
                                             <span className='left-side'>Trạng thái: </span>
                                             <span className='right-side'>
                                                 <Tag color={dataSchedule.status === 'PENDING' ? 'orange' : 'green'}>
-                                                {dataSchedule.status === 'PENDING' 
-                                                    ? 'Đang chờ' 
-                                                 : dataSchedule.status === 'ACCEPTED' 
-                                                 ? 'Đã chấp nhận' 
-                                                : 'Đã từ chối'}
+                                                    {dataSchedule.status === 'PENDING'
+                                                        ? 'Đang chờ'
+                                                        : dataSchedule.status === 'ACCEPTED'
+                                                            ? 'Đã chấp nhận'
+                                                            : 'Đã từ chối'}
                                                 </Tag>
                                             </span>
                                         </div>
@@ -83,7 +87,7 @@ const ScheduleDetail = () => {
                                             <span className='right-side'>{dataSchedule.phone}</span>
                                         </div>
                                         <div className='time'>
-                                            <span className='left-side'>Thời gian: </span>
+                                            <span className='left-side'>Thời gian hẹn: </span>
                                             <span className='right-side'>{moment(dataSchedule.time).format('YYYY-MM-DD HH:mm')}</span>
                                         </div>
                                         <div className='description'>

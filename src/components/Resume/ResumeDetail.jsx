@@ -65,7 +65,11 @@ const ResumeDetail = (props) => {
                                         <div className='rating'>
                                             <span className='left-side'>Đánh giá: </span>
                                             <span className='right-side'>
-                                                <Rate disabled defaultValue={4} />
+                                                <Rate
+                                                    disabled
+                                                    value={dataResume.rating}
+                                                    key={`rating-${dataResume.id}-${dataResume.rating}`}
+                                                />
                                             </span>
                                         </div>
                                         <div className='description'>

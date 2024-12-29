@@ -35,12 +35,12 @@ const Home = () => {
             children: <></>,
         },
         {
-            key: 'name',
+            key: 'rating,asc',
             label: `Trình độ thấp đến cao`,
             children: <></>,
         },
         {
-            key: 'desc',
+            key: 'rating,desc',
             label: `Trình độ Cao Đến Thấp`,
             children: <></>,
         },
@@ -153,7 +153,7 @@ const Home = () => {
                                 {listResume.map((item, index) => (
                                     <div className="resume-card" key={`resume-${index}`} onClick={() => handleRedirectResume(item)}>
                                         <div className="resume-card__image">
-                                            <img src={`${import.meta.env.VITE_BACKEND_URL}storage/resume/${item.images}`} alt={item.name} />
+                                            <img src={`${import.meta.env.VITE_BACKEND_URL}storage/resume/${item.images}`} />
                                         </div>
                                         <div className="resume-card__info">
                                             <h3 className="resume-card__title" title={item.name}>{item.name}</h3>
@@ -164,7 +164,11 @@ const Home = () => {
                                                     </Tag>
                                                 </div>
                                                 <div className="resume-card__rating" style={{ textAlign: "end" }}>
-                                                    Đánh giá: <Rate disabled defaultValue={item.rating || 4} />
+                                                    Đánh giá: <Rate
+                                                        disabled
+                                                        value={item.rating}
+                                                        key={`rating-${item.id}-${item.rating}`}
+                                                    />
                                                 </div>
                                             </div>
                                         </div>
